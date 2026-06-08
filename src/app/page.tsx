@@ -314,6 +314,8 @@ function TypeWriter({ text, className = "" }: { text: string; className?: string
 export default function Home() {
   const [activeTab, setActiveTab] = useState<(typeof tabs)[number]>("面向 Agent");
   const [copied, setCopied] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const [showGH, setShowGH] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(tabContent[activeTab]);
@@ -349,7 +351,7 @@ export default function Home() {
             <div className="flex items-center gap-2.5">
               <img src="https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png" alt="Alibaba Cloud" className="h-5 object-contain" />
               <span className="text-gray-300 mx-1">|</span>
-              <span className="font-medium text-[14px] text-gray-600 tracking-tight">Agent Toolkit</span>
+              <span className="font-medium text-[13px] text-gray-500 tracking-tight">开放平台 - API/AI工具链团队</span>
             </div>
             <div className="flex items-center gap-1">
               <a href="#products" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
@@ -361,34 +363,108 @@ export default function Home() {
               <a href="#" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
                 快速开始
               </a>
+
+              {/* 联系 — 点击弹出二维码 */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowQR(!showQR)}
+                  className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all cursor-pointer"
+                >
+                  联系
+                </button>
+                {showQR && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowQR(false)} />
+                    <div className="absolute right-0 top-10 z-50 bg-white rounded-2xl shadow-[0_12px_48px_rgba(0,0,0,0.1)] border border-black/[0.04] p-5 w-[220px]">
+                      <p className="text-[13px] text-gray-600 font-medium mb-3 text-center">扫码加入交流群</p>
+                      <img src="/qrcode.png" alt="QR Code" className="w-full rounded-lg" />
+                    </div>
+                  </>
+                )}
+              </div>
+
               <div className="w-px h-4 bg-gray-200 mx-2" />
-              <a
-                href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] text-gray-600 hover:text-gray-800 border border-gray-200 hover:border-gray-300 rounded-full transition-all"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
-                </svg>
-                GitHub
-              </a>
+
+              {/* GitHub — 展开 repo 列表 */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowGH(!showGH)}
+                  className={`flex items-center gap-1.5 px-4 py-1.5 text-[13px] border rounded-full transition-all cursor-pointer ${
+                    showGH
+                      ? "text-[#FF6A00] border-[rgba(255,106,0,0.2)] bg-[rgba(255,106,0,0.04)]"
+                      : "text-gray-600 hover:text-gray-800 border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                  GitHub
+                  <svg
+                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                    className={`transition-transform duration-200 ${showGH ? "rotate-180" : ""}`}
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+                {showGH && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowGH(false)} />
+                    <div className="absolute -right-4 top-14 z-50 rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.1),0_8px_24px_rgba(0,0,0,0.04)] w-[380px] gh-dropdown overflow-hidden" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'saturate(200%) blur(40px)', WebkitBackdropFilter: 'saturate(200%) blur(40px)', border: '1px solid rgba(255,255,255,0.6)' }}>
+                      <div className="p-3">
+                        <div className="space-y-1.5">
+                          <a
+                            href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-4 p-3.5 rounded-xl border border-transparent hover:border-[rgba(255,106,0,0.1)] hover:bg-white/60 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF6A00] to-[#FF9640] flex items-center justify-center flex-shrink-0 shadow-[0_3px_12px_rgba(255,106,0,0.2)] group-hover:shadow-[0_6px_20px_rgba(255,106,0,0.3)] group-hover:scale-105 transition-all">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+                                <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" />
+                                <path d="M12 12l9-5M12 12v10M12 12L3 7" />
+                              </svg>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-[14px] font-semibold text-gray-800 group-hover:text-[#FF6A00] transition-colors">agent-toolkit</div>
+                              <p className="text-[12px] text-gray-400 mt-0.5">Skills & Plugins for AI Agents</p>
+                            </div>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-300 group-hover:text-[#FF6A00] flex-shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M7 17L17 7M17 7H7M17 7v10" />
+                            </svg>
+                          </a>
+
+                          <a
+                            href="https://github.com/aliyun/alibabacloud-api-mcp-server"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-4 p-3.5 rounded-xl border border-transparent hover:border-[rgba(255,106,0,0.1)] hover:bg-white/60 transition-all group"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF6A00] to-[#FF9640] flex items-center justify-center flex-shrink-0 shadow-[0_3px_12px_rgba(255,106,0,0.2)] group-hover:shadow-[0_6px_20px_rgba(255,106,0,0.3)] group-hover:scale-105 transition-all">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+                                <rect x="3" y="3" width="18" height="18" rx="3" />
+                                <path d="M9 9h6M9 12h6M9 15h4" />
+                              </svg>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-[14px] font-semibold text-gray-800 group-hover:text-[#FF6A00] transition-colors">api-mcp-server</div>
+                              <p className="text-[12px] text-gray-400 mt-0.5">200+ 云服务 MCP 标准接入</p>
+                            </div>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-300 group-hover:text-[#FF6A00] flex-shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M7 17L17 7M17 7H7M17 7v10" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </nav>
 
         {/* Hero */}
         <section className="text-center pt-32 pb-24 px-10 max-w-[1200px] mx-auto">
-          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-gradient-to-r from-[rgba(255,106,0,0.06)] to-[rgba(255,160,80,0.03)] backdrop-blur-[10px] border border-[rgba(255,106,0,0.1)] rounded-full text-[14px] font-medium mb-8 animate-fade-in-up">
-            <span className="w-[6px] h-[6px] rounded-full bg-[#FF6A00] animate-pulse-dot" />
-            <span className="text-gray-500">支持</span>
-            <span className="text-gray-800">Claude Code</span>
-            <span className="text-gray-300">/</span>
-            <span className="text-gray-800">Codex</span>
-            <span className="text-gray-300">/</span>
-            <span className="text-gray-800">QoderWork</span>
-          </div>
-
           <h1 className="text-[56px] font-bold leading-[1.15] tracking-tight mb-6 animate-fade-in-up animation-delay-100">
             为 AI Agent 构建
             <br />
@@ -547,14 +623,6 @@ export default function Home() {
                   <a href="#" className="text-[13px] text-gray-400 hover:text-[#FF6A00] transition-colors">文档</a>
                   <a href="#" className="text-[13px] text-gray-400 hover:text-[#FF6A00] transition-colors">快速开始</a>
                   <a href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit" className="text-[13px] text-gray-400 hover:text-[#FF6A00] transition-colors">GitHub</a>
-                </div>
-              </div>
-              <div>
-                <h5 className="text-[13px] font-semibold text-gray-800 mb-3">支持平台</h5>
-                <div className="flex flex-col gap-2">
-                  <span className="text-[13px] text-gray-400">Claude Code</span>
-                  <span className="text-[13px] text-gray-400">Codex</span>
-                  <span className="text-[13px] text-gray-400">QoderWork</span>
                 </div>
               </div>
             </div>
