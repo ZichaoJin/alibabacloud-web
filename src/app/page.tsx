@@ -347,12 +347,9 @@ export default function Home() {
         <nav className="fixed top-0 left-0 right-0 px-10 py-3.5 border-b border-black/[0.04] z-50 bg-white/70 backdrop-blur-xl">
           <div className="max-w-[1200px] mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <svg width="24" height="24" viewBox="0 0 1024 1024" fill="none">
-                <path d="M103.3 512c0-119.6 79-224.9 193.5-258.4l30-8.8-8.7-30C308 181 325 145 356.4 124.2c31.5-20.8 70.2-22 103-3.3l17.3 9.9 12.2-15.7c50.2-64.7 126-101.8 208-101.8 145.4 0 263.8 118.3 263.8 263.8v21.4l21.3 1.3c108.3 6.5 193.6 97.1 193.6 206.2 0 114-92.7 206.7-206.7 206.7H329.5C205.1 712.7 103.3 619.5 103.3 512z" fill="#FF6A00"/>
-              </svg>
-              <span className="font-semibold text-[15px] text-gray-800 tracking-tight">
-                Alibaba Cloud <span className="text-gray-400 font-normal">/ Agent Toolkit</span>
-              </span>
+              <img src="https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png" alt="Alibaba Cloud" className="h-5 object-contain" />
+              <span className="text-gray-300 mx-1">|</span>
+              <span className="font-medium text-[14px] text-gray-600 tracking-tight">Agent Toolkit</span>
             </div>
             <div className="flex items-center gap-1">
               <a href="#products" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
@@ -382,9 +379,14 @@ export default function Home() {
 
         {/* Hero */}
         <section className="text-center pt-32 pb-24 px-10 max-w-[1200px] mx-auto">
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-[rgba(255,106,0,0.05)] backdrop-blur-[10px] border border-[rgba(255,106,0,0.12)] rounded-full text-[13px] text-[#FF6A00] font-medium mb-8 animate-fade-in-up">
-            <span className="w-[7px] h-[7px] bg-[#FF6A00] rounded-full animate-pulse-dot" />
-            Alibaba Cloud Open Platform
+          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-gradient-to-r from-[rgba(255,106,0,0.06)] to-[rgba(255,160,80,0.03)] backdrop-blur-[10px] border border-[rgba(255,106,0,0.1)] rounded-full text-[14px] font-medium mb-8 animate-fade-in-up">
+            <span className="w-[6px] h-[6px] rounded-full bg-[#FF6A00] animate-pulse-dot" />
+            <span className="text-gray-500">支持</span>
+            <span className="text-gray-800">Claude Code</span>
+            <span className="text-gray-300">/</span>
+            <span className="text-gray-800">Codex</span>
+            <span className="text-gray-300">/</span>
+            <span className="text-gray-800">QoderWork</span>
           </div>
 
           <h1 className="text-[56px] font-bold leading-[1.15] tracking-tight mb-6 animate-fade-in-up animation-delay-100">
@@ -401,30 +403,38 @@ export default function Home() {
           </p>
 
           {/* Install Card */}
-          <ShineCard className="max-w-[620px] mx-auto rounded-[22px] p-7 animate-fade-in-up animation-delay-300">
-            <div className="flex bg-black/[0.03] rounded-xl p-1 mb-5">
+          <ShineCard className="max-w-[640px] mx-auto rounded-[24px] p-8 animate-fade-in-up animation-delay-300">
+            {/* Tabs */}
+            <div className="relative flex bg-black/[0.03] rounded-xl p-1 mb-6">
+              <div
+                className="absolute top-1 bottom-1 rounded-[10px] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06),0_0_0_1px_rgba(255,106,0,0.06)] transition-all duration-300 ease-out"
+                style={{
+                  width: `${100 / tabs.length}%`,
+                  left: `${(tabs.indexOf(activeTab) * 100) / tabs.length}%`,
+                }}
+              />
               {tabs.map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`flex-1 text-center py-2.5 px-4 text-[14px] rounded-[9px] font-medium transition-all duration-250 cursor-pointer ${
-                    activeTab === tab
-                      ? "bg-white text-[#FF6A00] shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
-                      : "text-gray-400 hover:text-gray-600"
+                  className={`flex-1 text-center py-3 px-4 text-[14px] rounded-[10px] font-medium cursor-pointer relative z-10 transition-colors duration-200 ${
+                    activeTab === tab ? "text-[#FF6A00]" : "text-gray-400 hover:text-gray-600"
                   }`}
                 >
                   {tab}
                 </button>
               ))}
             </div>
-            <div className="relative bg-black/[0.02] border border-black/[0.05] rounded-[14px] p-5 font-mono text-[14px] text-gray-600 leading-loose text-left">
+
+            {/* Content block */}
+            <div className="relative bg-black/[0.02] border border-black/[0.05] rounded-[16px] p-6 text-left">
               <button
                 onClick={handleCopy}
-                className="absolute top-3.5 right-3.5 px-3.5 py-1.5 text-[11px] text-[#FF6A00] border border-[rgba(255,106,0,0.15)] rounded-[7px] bg-[rgba(255,106,0,0.04)] hover:bg-[rgba(255,106,0,0.08)] transition-all cursor-pointer font-sans"
+                className="absolute top-4 right-4 px-3.5 py-1.5 text-[12px] text-[#FF6A00] border border-[rgba(255,106,0,0.15)] rounded-lg bg-[rgba(255,106,0,0.04)] hover:bg-[rgba(255,106,0,0.08)] transition-all cursor-pointer font-sans"
               >
                 {copied ? "已复制 ✓" : "复制"}
               </button>
-              <pre className="whitespace-pre-wrap pr-16">{tabContent[activeTab]}</pre>
+              <pre className="whitespace-pre-wrap pr-16 font-mono text-[14px] text-gray-600 leading-[1.8]">{tabContent[activeTab]}</pre>
             </div>
           </ShineCard>
         </section>
@@ -450,13 +460,13 @@ export default function Home() {
             {products.map((p, i) => (
               <div
                 key={p.title}
-                className={`relative flex items-center gap-8 mb-8 last:mb-0 ${i % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}
+                className={`group relative flex items-center gap-8 mb-8 last:mb-0 ${i % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}
               >
                 {/* Card */}
-                <div className={`flex-1 group shine-card rounded-2xl p-6 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
+                <div className={`flex-1 shine-card rounded-2xl p-6 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
                   <div className={`flex items-center gap-3 mb-2 ${i % 2 === 0 ? "justify-end" : "justify-start"}`}>
                     <h4 className="text-[17px] font-semibold text-gray-800">{p.title}</h4>
-                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                    <span className={`text-[11px] font-medium px-2.5 py-0.5 rounded-full ${
                       p.status === "active"
                         ? "bg-[rgba(255,106,0,0.08)] text-[#FF6A00] border border-[rgba(255,106,0,0.12)]"
                         : "bg-gray-50 text-gray-400 border border-gray-100"
@@ -469,43 +479,43 @@ export default function Home() {
 
                 {/* Center dot */}
                 <div className="relative z-10 flex-shrink-0">
-                  <div className={`w-4 h-4 rounded-full border-[3px] ${
+                  <div className={`w-4 h-4 rounded-full border-[3px] transition-all duration-300 ${
                     p.status === "active"
-                      ? "border-[#FF6A00] bg-white shadow-[0_0_12px_rgba(255,106,0,0.3)]"
+                      ? "border-[#FF6A00] bg-white group-hover:shadow-[0_0_16px_rgba(255,106,0,0.4)]"
                       : "border-gray-300 bg-white"
                   }`} />
                 </div>
 
-                {/* Opposite side — mini code/visual */}
-                <div className={`flex-1 ${i % 2 === 0 ? "text-left" : "text-right"}`}>
+                {/* Opposite side — only visible on hover */}
+                <div className={`flex-1 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400 ${i % 2 === 0 ? "text-left" : "text-right"}`}>
                   {p.title === "alibabacloud-core" && (
-                    <div className="inline-block bg-black/[0.02] border border-black/[0.04] rounded-xl px-4 py-3 font-mono text-[11px] text-gray-500 text-left">
+                    <div className="inline-block bg-black/[0.02] border border-black/[0.04] rounded-xl px-5 py-3.5 font-mono text-[12px] text-gray-500 text-left">
                       <div><span className="text-[#FF6A00]">$</span> aliyun ecs DescribeInstances</div>
-                      <div className="text-gray-300 mt-1">→ 12 instances found</div>
+                      <div className="text-gray-400 mt-1.5">→ 12 instances found</div>
                     </div>
                   )}
                   {p.title === "alibabacloud-spec-ops" && (
                     <div className="inline-flex gap-2 items-center">
                       {["Plan", "Code", "Check", "Run"].map((s, si) => (
-                        <div key={s} className="flex items-center gap-1">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-medium border ${
-                            si === 3 ? "bg-[rgba(255,106,0,0.06)] border-[rgba(255,106,0,0.15)] text-[#FF6A00]" : "bg-gray-50 border-gray-100 text-gray-400"
+                        <div key={s} className="flex items-center gap-1.5">
+                          <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-[11px] font-semibold border ${
+                            si === 3 ? "bg-[rgba(255,106,0,0.06)] border-[rgba(255,106,0,0.2)] text-[#FF6A00]" : "bg-white border-gray-100 text-gray-400"
                           }`}>{si + 1}</div>
-                          {si < 3 && <div className="w-3 h-[1px] bg-gray-200" />}
+                          {si < 3 && <div className="w-4 h-[2px] bg-gradient-to-r from-[rgba(255,106,0,0.2)] to-gray-100 rounded-full" />}
                         </div>
                       ))}
                     </div>
                   )}
                   {p.title === "run_script" && (
-                    <div className="inline-block bg-black/[0.02] border border-black/[0.04] rounded-xl px-4 py-3 font-mono text-[11px] text-gray-400 text-left">
+                    <div className="inline-block bg-black/[0.02] border border-black/[0.04] rounded-xl px-5 py-3.5 font-mono text-[12px] text-gray-400 text-left">
                       <div><span className="text-gray-300">$</span> run deploy.sh --env prod</div>
-                      <div className="text-gray-300 mt-1">⏳ coming soon</div>
+                      <div className="text-gray-300 mt-1.5">⏳ coming soon</div>
                     </div>
                   )}
                   {p.title === "run_hcl" && (
-                    <div className="inline-block bg-black/[0.02] border border-black/[0.04] rounded-xl px-4 py-3 font-mono text-[11px] text-gray-400 text-left">
+                    <div className="inline-block bg-black/[0.02] border border-black/[0.04] rounded-xl px-5 py-3.5 font-mono text-[12px] text-gray-400 text-left">
                       <div><span className="text-gray-300">$</span> validate main.tf</div>
-                      <div className="text-gray-300 mt-1">⏳ coming soon</div>
+                      <div className="text-gray-300 mt-1.5">⏳ coming soon</div>
                     </div>
                   )}
                 </div>
@@ -515,25 +525,52 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="text-center py-14 border-t border-black/[0.04] text-[13px] text-gray-400 max-w-[1200px] mx-auto">
-          <div className="flex justify-center gap-8 mb-4">
-            <a
-              href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit"
-              className="hover:text-[#FF6A00] transition-colors"
-            >
-              GitHub
-            </a>
-            <a href="#" className="hover:text-[#FF6A00] transition-colors">
-              文档
-            </a>
-            <a href="#" className="hover:text-[#FF6A00] transition-colors">
-              快速开始
-            </a>
-            <a href="#" className="hover:text-[#FF6A00] transition-colors">
-              社区
-            </a>
+        <footer className="border-t border-black/[0.04] max-w-[1200px] mx-auto pt-16 pb-10 px-10">
+          <div className="flex justify-between items-start mb-12">
+            {/* Left — brand + slogan */}
+            <div>
+              <div className="flex items-center gap-2.5 mb-3">
+                <img src="https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png" alt="Alibaba Cloud" className="h-4 object-contain" />
+                <span className="text-gray-300 mx-1">/</span>
+                <span className="font-semibold text-[15px] text-gray-800">Agent Toolkit</span>
+              </div>
+              <p className="text-[14px] text-gray-400 max-w-[300px] leading-relaxed">
+                让 AI Agent 拥有云端能力，用自然语言操控云基础设施。
+              </p>
+            </div>
+
+            {/* Right — links */}
+            <div className="flex gap-16">
+              <div>
+                <h5 className="text-[13px] font-semibold text-gray-800 mb-3">资源</h5>
+                <div className="flex flex-col gap-2">
+                  <a href="#" className="text-[13px] text-gray-400 hover:text-[#FF6A00] transition-colors">文档</a>
+                  <a href="#" className="text-[13px] text-gray-400 hover:text-[#FF6A00] transition-colors">快速开始</a>
+                  <a href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit" className="text-[13px] text-gray-400 hover:text-[#FF6A00] transition-colors">GitHub</a>
+                </div>
+              </div>
+              <div>
+                <h5 className="text-[13px] font-semibold text-gray-800 mb-3">支持平台</h5>
+                <div className="flex flex-col gap-2">
+                  <span className="text-[13px] text-gray-400">Claude Code</span>
+                  <span className="text-[13px] text-gray-400">Codex</span>
+                  <span className="text-[13px] text-gray-400">QoderWork</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-gray-300">© 2024 Alibaba Cloud Open Platform</p>
+
+          {/* Bottom bar */}
+          <div className="flex items-center justify-between pt-6 border-t border-black/[0.04]">
+            <p className="text-[12px] text-gray-300">© 2024 Alibaba Cloud Open Platform</p>
+            <div className="flex items-center gap-4">
+              <a href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#FF6A00] transition-colors">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
