@@ -54,30 +54,30 @@ const conceptData = [
     id: "mcp",
     title: "MCP Core",
     tag: "Protocol",
-    desc: "基于 Model Context Protocol 的标准协议层，让 Agent 通过统一接口访问阿里云全系服务。",
+    desc: "统一协议层，Agent 通过标准接口访问阿里云全系服务",
     stats: [
-      { value: "200+", label: "云服务 API" },
-      { value: "9", label: "MCP Tools" },
+      { value: "200+", label: "API" },
+      { value: "9", label: "Tools" },
     ],
   },
   {
     id: "toolkits",
     title: "Agent Toolkits",
     tag: "Scenarios",
-    desc: "预构建的场景化工具集合，涵盖 OpenAPI、基础设施编排、脚本执行等核心能力。",
+    desc: "预构建工具集，涵盖 OpenAPI、IaC、脚本执行",
     stats: [
-      { value: "5", label: "工具模块" },
-      { value: "4", label: "执行阶段" },
+      { value: "5", label: "模块" },
+      { value: "4", label: "阶段" },
     ],
   },
   {
     id: "plugins",
     title: "Plugins",
     tag: "Extensible",
-    desc: "可扩展的插件体系，支持社区贡献与自定义扩展，按需组合你的专属能力栈。",
+    desc: "可扩展插件体系，按需组合，社区贡献",
     stats: [
-      { value: "4", label: "官方插件" },
-      { value: "3", label: "Agent 平台" },
+      { value: "4", label: "插件" },
+      { value: "3", label: "平台" },
     ],
   },
 ];
@@ -88,14 +88,14 @@ function ConceptShowcase() {
   return (
     <section className="px-10 py-24 max-w-[1200px] mx-auto">
       <div className="text-center mb-14">
-        <p className="text-[13px] text-[#FF6A00] font-semibold mb-3 tracking-wide">
+        <p className="text-[14px] text-[#FF6A00] font-semibold mb-3 tracking-wide">
           核心架构
         </p>
-        <h2 className="text-[36px] font-bold tracking-tight">
+        <h2 className="text-[40px] font-bold tracking-tight">
           MCP-Core · Toolkits · Plugins
         </h2>
-        <p className="text-[15px] text-gray-400 mt-3">
-          三层解耦架构，灵活组合，按需接入云端能力
+        <p className="text-[16px] text-gray-400 mt-3">
+          三层解耦，灵活组合，按需接入
         </p>
       </div>
 
@@ -112,25 +112,25 @@ function ConceptShowcase() {
                   : "bg-white/50 border-transparent hover:bg-white/80"
               }`}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <h3 className={`text-[16px] font-semibold transition-colors ${active === c.id ? "text-gray-900" : "text-gray-500"}`}>
+              <div className="flex items-center gap-2.5 mb-2">
+                <h3 className={`text-[18px] font-semibold transition-colors ${active === c.id ? "text-gray-900" : "text-gray-500"}`}>
                   {c.title}
                 </h3>
-                <span className={`px-2 py-0.5 text-[10px] font-medium rounded-full border transition-all ${
+                <span className={`px-2.5 py-0.5 text-[11px] font-medium rounded-full border transition-all ${
                   active === c.id
                     ? "bg-[rgba(255,106,0,0.08)] text-[#FF6A00] border-[rgba(255,106,0,0.12)]"
                     : "bg-gray-50 text-gray-400 border-gray-100"
                 }`}>{c.tag}</span>
               </div>
-              <p className={`text-[13px] leading-relaxed transition-colors ${active === c.id ? "text-gray-500" : "text-gray-400"}`}>
+              <p className={`text-[14px] leading-relaxed transition-colors ${active === c.id ? "text-gray-500" : "text-gray-400"}`}>
                 {c.desc}
               </p>
               {active === c.id && (
-                <div className="flex gap-5 mt-4 pt-4 border-t border-black/[0.04]">
+                <div className="flex gap-6 mt-4 pt-4 border-t border-black/[0.04]">
                   {c.stats.map((s) => (
                     <div key={s.label}>
-                      <div className="text-[20px] font-bold text-gray-800">{s.value}</div>
-                      <div className="text-[11px] text-gray-400">{s.label}</div>
+                      <div className="text-[24px] font-bold text-gray-800">{s.value}</div>
+                      <div className="text-[12px] text-gray-400">{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -302,18 +302,18 @@ export default function Home() {
               <svg width="24" height="24" viewBox="0 0 1024 1024" fill="none">
                 <path d="M103.3 512c0-119.6 79-224.9 193.5-258.4l30-8.8-8.7-30C308 181 325 145 356.4 124.2c31.5-20.8 70.2-22 103-3.3l17.3 9.9 12.2-15.7c50.2-64.7 126-101.8 208-101.8 145.4 0 263.8 118.3 263.8 263.8v21.4l21.3 1.3c108.3 6.5 193.6 97.1 193.6 206.2 0 114-92.7 206.7-206.7 206.7H329.5C205.1 712.7 103.3 619.5 103.3 512z" fill="#FF6A00"/>
               </svg>
-              <span className="font-semibold text-[14px] text-gray-800 tracking-tight">
+              <span className="font-semibold text-[15px] text-gray-800 tracking-tight">
                 Alibaba Cloud <span className="text-gray-400 font-normal">/ Agent Toolkit</span>
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <a href="#products" className="px-3.5 py-1.5 text-[13px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
+              <a href="#products" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
                 产品
               </a>
-              <a href="#" className="px-3.5 py-1.5 text-[13px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
+              <a href="#" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
                 文档
               </a>
-              <a href="#" className="px-3.5 py-1.5 text-[13px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
+              <a href="#" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">
                 快速开始
               </a>
               <div className="w-px h-4 bg-gray-200 mx-2" />
@@ -339,7 +339,7 @@ export default function Home() {
             Alibaba Cloud Open Platform
           </div>
 
-          <h1 className="text-[52px] font-bold leading-[1.2] tracking-tight mb-5 animate-fade-in-up animation-delay-100">
+          <h1 className="text-[56px] font-bold leading-[1.15] tracking-tight mb-6 animate-fade-in-up animation-delay-100">
             为 AI Agent 构建
             <br />
             <TypeWriter
@@ -348,8 +348,8 @@ export default function Home() {
             />
           </h1>
 
-          <p className="text-[17px] text-gray-400 max-w-[480px] mx-auto mb-14 leading-relaxed animate-fade-in-up animation-delay-200">
-            通过 MCP Server 将阿里云 200+ 云服务无缝接入 AI Agent，自然语言驱动云端操作。
+          <p className="text-[18px] text-gray-400 max-w-[500px] mx-auto mb-14 leading-relaxed animate-fade-in-up animation-delay-200">
+            MCP Server 无缝接入阿里云 200+ 服务，自然语言驱动云端操作
           </p>
 
           {/* Install Card */}
@@ -359,7 +359,7 @@ export default function Home() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`flex-1 text-center py-2.5 px-4 text-[13px] rounded-[9px] font-medium transition-all duration-250 cursor-pointer ${
+                  className={`flex-1 text-center py-2.5 px-4 text-[14px] rounded-[9px] font-medium transition-all duration-250 cursor-pointer ${
                     activeTab === tab
                       ? "bg-white text-[#FF6A00] shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
                       : "text-gray-400 hover:text-gray-600"
@@ -369,7 +369,7 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            <div className="relative bg-black/[0.02] border border-black/[0.05] rounded-[14px] p-5 font-mono text-[13px] text-gray-600 leading-loose text-left">
+            <div className="relative bg-black/[0.02] border border-black/[0.05] rounded-[14px] p-5 font-mono text-[14px] text-gray-600 leading-loose text-left">
               <button
                 onClick={handleCopy}
                 className="absolute top-3.5 right-3.5 px-3.5 py-1.5 text-[11px] text-[#FF6A00] border border-[rgba(255,106,0,0.15)] rounded-[7px] bg-[rgba(255,106,0,0.04)] hover:bg-[rgba(255,106,0,0.08)] transition-all cursor-pointer font-sans"
@@ -387,15 +387,12 @@ export default function Home() {
         {/* Products — Timeline style */}
         <section id="products" className="px-10 pb-24 max-w-[1200px] mx-auto">
           <div className="text-center mb-14">
-            <p className="text-[13px] text-[#FF6A00] font-semibold mb-3 tracking-wide">
+            <p className="text-[14px] text-[#FF6A00] font-semibold mb-3 tracking-wide">
               产品与工具
             </p>
-            <h2 className="text-[36px] font-bold tracking-tight">
+            <h2 className="text-[40px] font-bold tracking-tight">
               开箱即用的云端集成
             </h2>
-            <p className="text-[15px] text-gray-400 mt-3">
-              每个插件聚焦一类场景，安装即用
-            </p>
           </div>
 
           <div className="max-w-[900px] mx-auto relative">
@@ -410,7 +407,7 @@ export default function Home() {
                 {/* Card */}
                 <div className={`flex-1 group shine-card rounded-2xl p-6 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
                   <div className={`flex items-center gap-3 mb-2 ${i % 2 === 0 ? "justify-end" : "justify-start"}`}>
-                    <h4 className="text-[16px] font-semibold text-gray-800">{p.title}</h4>
+                    <h4 className="text-[17px] font-semibold text-gray-800">{p.title}</h4>
                     <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
                       p.status === "active"
                         ? "bg-[rgba(255,106,0,0.08)] text-[#FF6A00] border border-[rgba(255,106,0,0.12)]"
@@ -419,7 +416,7 @@ export default function Home() {
                       {p.status === "active" ? "已可用" : "即将推出"}
                     </span>
                   </div>
-                  <p className="text-[13px] text-gray-500 leading-relaxed">{p.desc}</p>
+                  <p className="text-[14px] text-gray-500 leading-relaxed">{p.desc}</p>
                 </div>
 
                 {/* Center dot */}
