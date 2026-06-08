@@ -3,9 +3,6 @@
 :root {
   --background: #ffffff;
   --foreground: #1a1a1a;
-  --orange-500: #FF6A00;
-  --orange-400: #FF8830;
-  --orange-300: #FFB060;
 }
 
 @theme inline {
@@ -22,53 +19,89 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,106,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,106,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+}
+
+/* Orb animations */
 @keyframes orbFloat {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -20px) scale(1.03); }
-  50% { transform: translate(-10px, 20px) scale(0.97); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-15px, 25px) scale(0.95); }
   75% { transform: translate(20px, 10px) scale(1.02); }
 }
 
+.animate-orb { animation: orbFloat 20s ease-in-out infinite; }
+.animate-orb-delay-1 { animation: orbFloat 20s ease-in-out infinite; animation-delay: -7s; }
+.animate-orb-delay-2 { animation: orbFloat 20s ease-in-out infinite; animation-delay: -14s; }
+
+/* Pulse dot */
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.4; transform: scale(1.5); }
 }
+.animate-pulse-dot { animation: pulse 2s ease-in-out infinite; }
 
+/* Cursor blink */
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+.animate-cursor { animation: cursorBlink 1s step-end infinite; }
 
-.animate-orb {
-  animation: orbFloat 15s ease-in-out infinite;
+/* Fade in up */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+.animation-delay-100 { animation-delay: 0.1s; opacity: 0; }
+.animation-delay-200 { animation-delay: 0.2s; opacity: 0; }
+.animation-delay-300 { animation-delay: 0.3s; opacity: 0; }
 
-.animate-orb-delay-1 {
-  animation: orbFloat 15s ease-in-out infinite;
-  animation-delay: -5s;
-}
-
-.animate-orb-delay-2 {
-  animation: orbFloat 15s ease-in-out infinite;
-  animation-delay: -10s;
-}
-
-.animate-pulse-dot {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.animate-cursor {
-  animation: cursorBlink 1s step-end infinite;
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.65);
+/* Shine card — mouse-following highlight + border glow */
+.shine-card {
+  position: relative;
+  background: rgba(255,255,255,0.7);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
-.glass-strong {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: saturate(180%) blur(30px);
-  -webkit-backdrop-filter: saturate(180%) blur(30px);
+.shine-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
 }
+
+.shine-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shine-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  border-color: rgba(255,106,0,0.15);
+}
+
+.shine-card:hover::after { opacity: 1; }
+
+.shine-card > * { position: relative; z-index: 1; }
