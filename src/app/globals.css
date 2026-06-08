@@ -105,3 +105,66 @@ body {
 .shine-card:hover::after { opacity: 1; }
 
 .shine-card > * { position: relative; z-index: 1; }
+
+/* Tool row slide in */
+.tool-row {
+  animation: slideInLeft 0.5s ease-out both;
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Shimmer bar sweeping across tool items */
+.shimmer-bar {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,106,0,0.04) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Pipeline node pulse */
+.pipeline-node {
+  animation: nodePulse 2s ease-in-out infinite;
+}
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Pipeline progress bar fill */
+.pipeline-progress {
+  width: 0%;
+  animation: fillBar 1.5s ease-out forwards;
+}
+@keyframes fillBar {
+  to { width: 100%; }
+}
+
+/* Platform card glow sweep */
+.platform-card {
+  background: white;
+  border-color: rgba(0,0,0,0.04);
+  transition: all 0.3s;
+}
+.platform-card:hover {
+  border-color: rgba(255,106,0,0.15);
+}
+.platform-glow {
+  background: linear-gradient(135deg, transparent 40%, rgba(255,106,0,0.06) 50%, transparent 60%);
+  background-size: 300% 300%;
+  animation: glowSweep 3s ease-in-out infinite;
+}
+@keyframes glowSweep {
+  0% { background-position: 100% 100%; }
+  50% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Plugin row slide in */
+.plugin-row {
+  animation: slideInLeft 0.4s ease-out both;
+}

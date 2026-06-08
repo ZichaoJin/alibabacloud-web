@@ -141,91 +141,139 @@ function ConceptShowcase() {
 
         {/* Right — dynamic demo panel */}
         <div className="flex-1 rounded-2xl border border-black/[0.04] bg-white/60 backdrop-blur-xl overflow-hidden relative min-h-[380px]">
-          {/* MCP Core demo */}
+          {/* MCP Core demo — animated streaming calls */}
           <div className={`absolute inset-0 p-8 transition-all duration-500 ${active === "mcp" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}>
-            <div className="text-[11px] text-gray-400 mb-4 font-mono">MCP Server · Live Demo</div>
-            <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
+              <span className="text-[12px] text-gray-400 font-mono">MCP Server Running</span>
+            </div>
+
+            {/* Animated tool calls */}
+            <div className="space-y-2.5">
               {["ListProducts", "SearchApis", "GetApiDefinition", "GenerateCLICommand", "CallCLI"].map((tool, i) => (
-                <div key={tool} className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
-                  <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" style={{ animationDelay: `${i * 0.3}s` }} />
-                  <div className="flex-1 h-10 rounded-lg bg-gradient-to-r from-[rgba(255,106,0,0.04)] to-transparent border border-black/[0.03] flex items-center px-4">
-                    <span className="font-mono text-[12px] text-gray-600">{tool}</span>
-                    <span className="ml-auto text-[10px] text-gray-300">tool/{i + 1}</span>
+                <div
+                  key={tool}
+                  className="flex items-center gap-3 tool-row"
+                  style={{ animationDelay: `${i * 0.15}s` }}
+                >
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[rgba(255,106,0,0.08)] to-[rgba(255,106,0,0.02)] border border-[rgba(255,106,0,0.1)] flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#FF6A00] animate-pulse-dot" style={{ animationDelay: `${i * 0.4}s` }} />
+                  </div>
+                  <div className="flex-1 h-11 rounded-lg border border-black/[0.04] flex items-center px-4 relative overflow-hidden">
+                    <div className="shimmer-bar absolute inset-0" style={{ animationDelay: `${i * 0.3}s` }} />
+                    <span className="font-mono text-[13px] text-gray-700 relative z-10">{tool}</span>
+                    <span className="ml-auto text-[11px] text-[#FF6A00] relative z-10 font-medium">200ms</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="absolute bottom-8 left-8 right-8 h-12 rounded-lg bg-black/[0.03] border border-black/[0.04] flex items-center px-4 font-mono text-[12px] text-gray-400">
-              <span className="text-[#FF6A00] mr-2">→</span>
-              Agent 请求: &quot;帮我查询 ECS 的 API 列表&quot;
-              <span className="ml-1 w-[2px] h-4 bg-[#FF6A00] animate-cursor" />
+
+            {/* Input bar with typing */}
+            <div className="absolute bottom-7 left-8 right-8 h-12 rounded-xl bg-gradient-to-r from-[rgba(255,106,0,0.03)] to-transparent border border-[rgba(255,106,0,0.1)] flex items-center px-5">
+              <span className="text-[#FF6A00] mr-3 text-[14px]">›</span>
+              <span className="font-mono text-[13px] text-gray-500">帮我查询 ECS 的 API 列表</span>
+              <span className="ml-1 w-[2px] h-5 bg-[#FF6A00] animate-cursor rounded-full" />
             </div>
           </div>
 
-          {/* Toolkits demo */}
+          {/* Toolkits demo — animated pipeline */}
           <div className={`absolute inset-0 p-8 transition-all duration-500 ${active === "toolkits" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}>
-            <div className="text-[11px] text-gray-400 mb-4 font-mono">Spec-Ops Pipeline · Workflow</div>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
+              <span className="text-[12px] text-gray-400 font-mono">Spec-Ops Pipeline</span>
+            </div>
+
+            {/* Pipeline — horizontal flow */}
+            <div className="relative flex items-center justify-between mb-8 px-2">
+              {/* Connection line behind */}
+              <div className="absolute top-[28px] left-[40px] right-[40px] h-[2px] bg-gray-100 rounded-full">
+                <div className="h-full bg-gradient-to-r from-[#FF6A00] via-[#FFB060] to-[rgba(255,106,0,0.2)] rounded-full pipeline-progress" />
+              </div>
+
               {["Plan", "Codegen", "Validate", "Execute"].map((step, i) => (
-                <div key={step} className="flex items-center">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center text-[12px] font-semibold border transition-all duration-500"
-                      style={{
-                        background: `rgba(255,106,0,${0.05 + i * 0.05})`,
-                        borderColor: `rgba(255,106,0,${0.1 + i * 0.1})`,
-                        color: i === 3 ? "#FF6A00" : "#888",
-                        animationDelay: `${i * 0.2}s`,
-                      }}
-                    >
-                      {i + 1}
-                    </div>
-                    <span className="text-[11px] text-gray-500 mt-2">{step}</span>
+                <div key={step} className="flex flex-col items-center relative z-10">
+                  <div
+                    className="w-14 h-14 rounded-full flex items-center justify-center shadow-sm pipeline-node"
+                    style={{
+                      background: i === 3 ? "linear-gradient(135deg, #FF6A00, #FF9640)" : "white",
+                      border: i === 3 ? "none" : "2px solid rgba(255,106,0,0.15)",
+                      color: i === 3 ? "white" : "#FF6A00",
+                      animationDelay: `${i * 0.5}s`,
+                      boxShadow: i === 3 ? "0 4px 20px rgba(255,106,0,0.3)" : "0 2px 8px rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      {i === 0 && <><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4"/></>}
+                      {i === 1 && <><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></>}
+                      {i === 2 && <><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></>}
+                      {i === 3 && <><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></>}
+                    </svg>
                   </div>
-                  {i < 3 && (
-                    <div className="w-12 h-[2px] mx-2 bg-gradient-to-r from-[rgba(255,106,0,0.2)] to-[rgba(255,106,0,0.05)]" />
-                  )}
+                  <span className={`text-[12px] mt-3 font-medium ${i === 3 ? "text-[#FF6A00]" : "text-gray-500"}`}>{step}</span>
                 </div>
               ))}
             </div>
-            <div className="bg-black/[0.02] border border-black/[0.04] rounded-xl p-4 font-mono text-[11px] leading-relaxed">
-              <div className="text-gray-400 mb-1"># Terraform generated output</div>
-              <div className="text-gray-600">resource <span className="text-[#FF6A00]">&quot;alicloud_instance&quot;</span> &quot;web&quot; {"{"}</div>
-              <div className="text-gray-600 pl-4">instance_type = &quot;ecs.c7.large&quot;</div>
-              <div className="text-gray-600 pl-4">image_id = &quot;ubuntu_22_04_x64&quot;</div>
-              <div className="text-gray-600">{"}"}</div>
+
+            {/* Code output with line animation */}
+            <div className="bg-[#1a1a2e] rounded-xl p-5 font-mono text-[12px] leading-[1.8]">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-3 h-3 rounded-full bg-red-400/60" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400/60" />
+                <div className="w-3 h-3 rounded-full bg-green-400/60" />
+                <span className="ml-2 text-[10px] text-gray-500">output.tf</span>
+              </div>
+              <div className="text-gray-500">resource</div>
+              <div><span className="text-[#FFB060]">&quot;alicloud_instance&quot;</span> <span className="text-gray-400">&quot;web&quot;</span> {"{"}</div>
+              <div className="pl-4 text-gray-300">instance_type = <span className="text-green-400">&quot;ecs.c7.large&quot;</span></div>
+              <div className="pl-4 text-gray-300">image_id = <span className="text-green-400">&quot;ubuntu_22_04&quot;</span></div>
+              <div className="text-gray-500">{"}"}</div>
             </div>
           </div>
 
-          {/* Plugins demo */}
+          {/* Plugins demo — animated ecosystem */}
           <div className={`absolute inset-0 p-8 transition-all duration-500 ${active === "plugins" ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}>
-            <div className="text-[11px] text-gray-400 mb-4 font-mono">Plugin Ecosystem · Supported Platforms</div>
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
+              <span className="text-[12px] text-gray-400 font-mono">Plugin Ecosystem</span>
+            </div>
+
+            {/* Platform cards with hover glow */}
             <div className="grid grid-cols-3 gap-3 mb-6">
               {[
-                { name: "Claude Code", color: true },
-                { name: "Codex", color: false },
-                { name: "QoderWork", color: false },
-              ].map((p) => (
+                { name: "Claude Code", active: true },
+                { name: "Codex", active: true },
+                { name: "QoderWork", active: true },
+              ].map((p, i) => (
                 <div
                   key={p.name}
-                  className={`rounded-xl p-4 border text-center transition-all ${
-                    p.color
-                      ? "bg-[rgba(255,106,0,0.04)] border-[rgba(255,106,0,0.12)]"
-                      : "bg-white/50 border-black/[0.04]"
-                  }`}
+                  className="platform-card rounded-xl p-4 border text-center relative overflow-hidden"
+                  style={{ animationDelay: `${i * 0.2}s` }}
                 >
-                  <div className={`text-[13px] font-medium ${p.color ? "text-[#FF6A00]" : "text-gray-600"}`}>{p.name}</div>
-                  <div className="text-[10px] text-gray-400 mt-1">Agent Platform</div>
+                  <div className="platform-glow absolute inset-0" style={{ animationDelay: `${i * 1.5}s` }} />
+                  <div className="text-[14px] font-semibold text-gray-700 relative z-10">{p.name}</div>
+                  <div className="text-[11px] text-gray-400 mt-1 relative z-10">Supported</div>
                 </div>
               ))}
             </div>
-            <div className="space-y-2">
-              {["alibabacloud-core", "alibabacloud-spec-ops", "run_script", "run_hcl"].map((plugin, i) => (
-                <div key={plugin} className="flex items-center gap-3 h-9 px-4 rounded-lg bg-black/[0.02] border border-black/[0.03]">
-                  <div className={`w-1.5 h-1.5 rounded-full ${i < 2 ? "bg-[#FF6A00]" : "bg-gray-300"}`} />
-                  <span className="font-mono text-[12px] text-gray-600">{plugin}</span>
-                  <span className={`ml-auto text-[10px] ${i < 2 ? "text-[#FF6A00]" : "text-gray-300"}`}>
-                    {i < 2 ? "active" : "coming"}
+
+            {/* Plugin list with status indicators */}
+            <div className="space-y-2.5">
+              {[
+                { name: "alibabacloud-core", status: "active", version: "v1.2" },
+                { name: "alibabacloud-spec-ops", status: "active", version: "v1.0" },
+                { name: "run_script", status: "coming", version: "—" },
+                { name: "run_hcl", status: "coming", version: "—" },
+              ].map((plugin, i) => (
+                <div
+                  key={plugin.name}
+                  className="flex items-center gap-3 h-11 px-4 rounded-xl border border-black/[0.04] plugin-row"
+                  style={{ animationDelay: `${i * 0.12}s` }}
+                >
+                  <div className={`w-2.5 h-2.5 rounded-full ${plugin.status === "active" ? "bg-[#FF6A00] shadow-[0_0_8px_rgba(255,106,0,0.4)]" : "bg-gray-200"}`} />
+                  <span className="font-mono text-[13px] text-gray-700">{plugin.name}</span>
+                  <span className="ml-auto text-[11px] text-gray-400">{plugin.version}</span>
+                  <span className={`text-[11px] font-medium ${plugin.status === "active" ? "text-[#FF6A00]" : "text-gray-300"}`}>
+                    {plugin.status === "active" ? "● live" : "○ soon"}
                   </span>
                 </div>
               ))}
