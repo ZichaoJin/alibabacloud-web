@@ -95,230 +95,250 @@ const toolData = [
 
 function McpCoreDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">MCP-Core · 9 Tools</span>
-    </div>
-    {[
-      { cat: "执行类", tools: [{ name: "Call_CLI", desc: "安全沙箱内执行 CLI 命令" }, { name: "Run_IaC", desc: "远程执行 Terraform 编排" }, { name: "Run_Scripts", desc: "远程执行确定脚本任务" }] },
-      { cat: "发现类", tools: [{ name: "ListApis / SearchApis", desc: "自然语言搜索阿里云 API" }, { name: "ListProductRegions", desc: "查询产品可用 Region" }, { name: "GenerateCLICommand", desc: "自然语言生成 CLI 命令" }] },
-      { cat: "知识类", tools: [{ name: "SearchDocuments", desc: "检索官方文档与最佳实践" }] },
-    ].map((g) => (
-      <div key={g.cat} className="mb-3">
-        <div className="text-[11px] text-[#FF6A00] font-semibold mb-1.5 tracking-wide">{g.cat}</div>
-        <div className="space-y-1.5">
-          {g.tools.map((t) => (
-            <div key={t.name} className="flex items-center gap-3 h-9 px-4 rounded-lg border border-black/[0.04] relative overflow-hidden">
-              <div className="shimmer-bar absolute inset-0" />
-              <span className="font-mono text-[12px] text-gray-700 relative z-10">{t.name}</span>
-              <span className="ml-auto text-[11px] text-gray-400 relative z-10">{t.desc}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    ))}
-    <div className="text-[11px] text-[#FF6A00] font-semibold mb-1.5 tracking-wide mt-4">核心优势</div>
-    <div className="grid grid-cols-2 gap-1.5 mb-3">
-      {[{ l: "协议层安全", d: "配置允许执行的 API 范围" }, { l: "HITL 可选", d: "敏感操作人工审批" }, { l: "0 依赖免升级", d: "服务端更新即生效" }, { l: "安全沙箱", d: "执行环境隔离" }, { l: "统一抽象", d: "元数据+文档+执行闭环" }].map((f) => (
-        <div key={f.l} className="flex items-start gap-2 px-3 py-1.5 rounded-lg bg-[rgba(255,106,0,0.03)] border border-[rgba(255,106,0,0.08)]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#FF6A00] mt-1.5 flex-shrink-0" />
-          <div><span className="text-[11px] font-medium text-gray-700">{f.l}</span><p className="text-[10px] text-gray-400">{f.d}</p></div>
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">Agent 调用阿里云的统一协议层</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-5">元数据 + 文档 + 执行三层闭环，将 2w+ OpenAPI 通过 9 大核心工具暴露给 Agent。</p>
+
+    <div className="space-y-2 mb-5">
+      {[
+        { name: "Call_CLI", desc: "在安全沙箱内执行任意阿里云 CLI 命令" },
+        { name: "Run_IaC", desc: "安全地远程执行 Terraform 基础设施编排" },
+        { name: "Run_Scripts", desc: "安全地远程执行确定性脚本任务" },
+        { name: "ListApis / SearchApis", desc: "让 Agent 通过自然语言搜索阿里云 API" },
+        { name: "GenerateCLICommand", desc: "通过自然语言自动生成 CLI 命令" },
+        { name: "SearchDocuments", desc: "检索官方文档、最佳实践与实时材料" },
+      ].map((t, i) => (
+        <div key={t.name} className="flex items-center gap-3 px-4 py-2.5 rounded-lg border border-black/[0.04] tool-row relative overflow-hidden" style={{ animationDelay: `${i * 0.08}s` }}>
+          <div className="shimmer-bar absolute inset-0" style={{ animationDelay: `${i * 0.3}s` }} />
+          <span className="font-mono text-[13px] text-gray-800 font-medium relative z-10 w-[180px] flex-shrink-0">{t.name}</span>
+          <span className="text-[12px] text-gray-400 relative z-10">{t.desc}</span>
         </div>
       ))}
     </div>
-    <a href="https://github.com/aliyun/alibabacloud-api-mcp-server" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#FF6A00] hover:underline font-medium">GitHub →</a>
+
+    <div className="text-[12px] text-[#FF6A00] font-semibold mb-2 mt-1">核心优势</div>
+    <div className="grid grid-cols-2 gap-2 mb-4">
+      {[
+        { label: "协议层安全", desc: "配置 Agent 可执行的 API 范围" },
+        { label: "HITL 审批", desc: "敏感操作人工审批介入" },
+        { label: "0 依赖免升级", desc: "服务端更新即生效" },
+        { label: "安全沙箱", desc: "执行环境隔离" },
+      ].map((f, i) => (
+        <div key={f.label} className="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-[rgba(255,106,0,0.03)] border border-[rgba(255,106,0,0.08)] tool-row" style={{ animationDelay: `${(i + 6) * 0.08}s` }}>
+          <div className="w-1.5 h-1.5 rounded-full bg-[#FF6A00] flex-shrink-0" />
+          <span className="text-[12px] font-medium text-gray-600">{f.label}</span>
+          <span className="text-[11px] text-gray-400 ml-auto">{f.desc}</span>
+        </div>
+      ))}
+    </div>
+    <a href="https://github.com/aliyun/alibabacloud-api-mcp-server" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">GitHub →</a>
   </>);
 }
 
 function PluginDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">alibabacloud-agent-toolkit</span>
-    </div>
-    <div className="rounded-xl border border-black/[0.04] p-4 mb-3">
-      <div className="text-[14px] font-semibold text-gray-800 mb-2">alibabacloud-core</div>
-      <div className="text-[12px] text-gray-400 mb-2">阿里云原子能力 Skill 与使用指南集合</div>
-      <div className="flex flex-wrap gap-1.5">
-        {["SDK 最佳实践", "CLI 指引", "多账号查询", "MCP 最佳实践", "Terraform 指引", "MCP-Core 集成"].map((s) => (
-          <span key={s} className="px-2 py-0.5 text-[11px] bg-gray-50 text-gray-600 rounded-md border border-gray-100">{s}</span>
-        ))}
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">Agent 框架官方 Plugin（开源）</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-5">面向 Claude / Codex / Qoder Work，以 Skill + 最佳实践开箱集成，自动集成 MCP-Core。</p>
+
+    <div className="space-y-4 mb-5">
+      <div className="rounded-xl border border-black/[0.04] p-5">
+        <div className="text-[15px] font-semibold text-gray-800 mb-4">alibabacloud-core · 原子能力 Skill 集合</div>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { name: "SDK", desc: "集成最佳实践" },
+            { name: "CLI", desc: "使用指引" },
+            { name: "Terraform", desc: "使用指引" },
+            { name: "MCP", desc: "集成最佳实践" },
+            { name: "多账号", desc: "查询能力" },
+            { name: "MCP-Core", desc: "自动集成" },
+          ].map((s, i) => (
+            <div key={s.name} className="rounded-lg border border-black/[0.04] p-3 tool-row hover:border-[rgba(255,106,0,0.15)] transition-colors" style={{ animationDelay: `${i * 0.06}s` }}>
+              <div className="text-[13px] font-semibold text-gray-700">{s.name}</div>
+              <div className="text-[11px] text-gray-400 mt-0.5">{s.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-black/[0.04] p-5">
+        <div className="text-[15px] font-semibold text-gray-800 mb-1">alibabacloud-spec-ops · SDD 运维插件</div>
+        <p className="text-[13px] text-gray-400 mb-5">端到端自动化运维流程</p>
+
+        {/* Animated pipeline */}
+        <div className="relative flex items-center justify-between px-2">
+          <div className="absolute top-[24px] left-[50px] right-[50px] h-[2px] bg-gray-100 rounded-full">
+            <div className="h-full bg-gradient-to-r from-[#FF6A00] via-[#FFB060] to-[rgba(255,106,0,0.2)] rounded-full pipeline-progress" />
+          </div>
+          {[
+            { label: "Plan", desc: "SDD + Rule 定义" },
+            { label: "Code", desc: "Terraform IaC 生成" },
+            { label: "Review", desc: "HITL 人工审批" },
+            { label: "Execute", desc: "安全执行部署" },
+          ].map((s, i) => (
+            <div key={s.label} className="flex flex-col items-center relative z-10 w-[100px]">
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center text-[11px] font-bold pipeline-node tracking-tight"
+                style={{
+                  background: i === 3 ? "linear-gradient(135deg, #FF6A00, #FF9640)" : "white",
+                  border: i === 3 ? "none" : "2px solid rgba(255,106,0,0.15)",
+                  color: i === 3 ? "white" : "#FF6A00",
+                  boxShadow: i === 3 ? "0 4px 16px rgba(255,106,0,0.3)" : "0 1px 6px rgba(0,0,0,0.04)",
+                  animationDelay: `${i * 0.5}s`,
+                }}
+              >
+                {s.label}
+              </div>
+              <span className="text-[11px] text-gray-400 mt-2 text-center leading-tight">{s.desc}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-    <div className="rounded-xl border border-black/[0.04] p-4 mb-3">
-      <div className="text-[14px] font-semibold text-gray-800 mb-2">alibabacloud-spec-ops</div>
-      <div className="text-[12px] text-gray-400 mb-2">SDD 运维插件 · 端到端流程</div>
-      <div className="flex flex-wrap gap-1.5">
-        {["SDD + Rule", "Terraform IaC", "HITL 审批", "MCP 集成"].map((s) => (
-          <span key={s} className="px-2 py-0.5 text-[11px] bg-[rgba(255,106,0,0.04)] text-gray-600 rounded-md border border-[rgba(255,106,0,0.08)]">{s}</span>
-        ))}
-      </div>
-    </div>
-    <a href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#FF6A00] hover:underline font-medium">GitHub →</a>
+    <a href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">GitHub →</a>
   </>);
 }
 
 function CliDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">CLI · AI Mode</span>
-    </div>
-    <div className="bg-[#1a1a2e] rounded-xl p-4 font-mono text-[12px] leading-[1.7] mb-4">
-      <div className="flex items-center gap-2 mb-2">
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">All-in-One 阿里云命令行</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-5">统一命令行工具，OSS/KMS/SLS 等已收敛。在 Agent 场景下强烈建议开启 AI Mode。</p>
+
+    <div className="bg-[#1a1a2e] rounded-xl p-5 font-mono text-[13px] leading-[1.8] mb-5 tool-row" style={{ animationDelay: "0.1s" }}>
+      <div className="flex items-center gap-2 mb-3">
         <div className="w-3 h-3 rounded-full bg-red-400/60" /><div className="w-3 h-3 rounded-full bg-yellow-400/60" /><div className="w-3 h-3 rounded-full bg-green-400/60" />
       </div>
       <div className="text-gray-400"># 开启 AI Mode</div>
       <div className="text-gray-300">$ <span className="text-[#FFB060]">aliyun configure ai-mode enable</span></div>
+      <div className="mt-2 text-gray-400"># 设置来源标识</div>
+      <div className="text-gray-300">$ <span className="text-[#FFB060]">aliyun configure ai-mode set-user-agent</span> \</div>
+      <div className="text-gray-300 pl-4">--user-agent <span className="text-green-400">AlibabaCloud-Agent-Skills</span></div>
     </div>
-    <div className="space-y-1.5 mb-3">
-      {[{ l: "自动纠错", d: "报错返回纠错指引" }, { l: "可观测", d: "执行链路标识" }, { l: "全产品", d: "OSS/KMS/SLS 统一" }, { l: "统一鉴权", d: "阿里云体系对齐" }, { l: "retry-after", d: "限流退避" }].map((f) => (
-        <div key={f.l} className="flex items-center gap-3 px-3 py-1.5 rounded-lg border border-black/[0.04]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#FF6A00]" />
-          <span className="text-[12px] font-medium text-gray-700">{f.l}</span>
-          <span className="text-[11px] text-gray-400 ml-auto">{f.d}</span>
+
+    <div className="space-y-2 mb-4">
+      {[
+        { label: "自动纠错", desc: "报错后返回指引，Agent 自我修正" },
+        { label: "可观测", desc: "执行链路标识，便于排查" },
+        { label: "全产品覆盖", desc: "All in One，阿里云全产品" },
+        { label: "统一鉴权", desc: "与阿里云鉴权体系对齐" },
+        { label: "限流退避", desc: "内建 retry-after 策略" },
+      ].map((f, i) => (
+        <div key={f.label} className="flex items-center gap-3 px-4 py-2.5 rounded-lg border border-black/[0.04] relative overflow-hidden tool-row" style={{ animationDelay: `${(i + 1) * 0.08}s` }}>
+          <div className="shimmer-bar absolute inset-0" style={{ animationDelay: `${i * 0.3}s` }} />
+          <span className="text-[13px] font-medium text-gray-700 relative z-10 w-[80px] flex-shrink-0">{f.label}</span>
+          <span className="text-[12px] text-gray-400 relative z-10">{f.desc}</span>
         </div>
       ))}
     </div>
-    <a href="https://next.api.aliyun.com/api-tools/cli" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#FF6A00] hover:underline font-medium">官方文档 →</a>
+    <a href="https://next.api.aliyun.com/api-tools/cli" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">官方文档 →</a>
   </>);
 }
 
 function SdkDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">Alibaba Cloud SDK</span>
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">多语言代码集成</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-5">覆盖 Common SDK 与产品专有 SDK，适合在业务代码中嵌入阿里云调用。</p>
+
+    <div className="space-y-3 mb-5">
+      {[
+        { title: "Common SDK", desc: "通用 OpenAPI 调用入口，适合快速、轻量集成任意阿里云服务" },
+        { title: "产品专有 SDK", desc: "强类型、强语义，提供完整类型定义和参数校验，适合深度集成" },
+        { title: "SDK Coding Skill", desc: "根据需求自动匹配最佳实践，为 Agent 生成正确的 SDK 调用代码" },
+      ].map((s, i) => (
+        <div key={s.title} className="rounded-xl border border-black/[0.04] p-4 relative overflow-hidden tool-row" style={{ animationDelay: `${i * 0.1}s` }}>
+          <div className="shimmer-bar absolute inset-0" style={{ animationDelay: `${i * 0.4}s` }} />
+          <div className="text-[15px] font-semibold text-gray-800 mb-1 relative z-10">{s.title}</div>
+          <p className="text-[13px] text-gray-400 leading-relaxed relative z-10">{s.desc}</p>
+        </div>
+      ))}
     </div>
-    {[{ t: "Common SDK", d: "通用 OpenAPI 入口，轻量集成" }, { t: "产品专有 SDK", d: "强类型强语义，深度集成" }, { t: "SDK Coding Skill", d: "自动匹配最佳实践生成代码" }].map((s) => (
-      <div key={s.t} className="rounded-xl border border-black/[0.04] p-4 mb-2">
-        <div className="text-[14px] font-semibold text-gray-800 mb-1">{s.t}</div>
-        <p className="text-[12px] text-gray-400">{s.d}</p>
-      </div>
-    ))}
-    <a href="https://next.api.aliyun.com/api-tools/sdk" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#FF6A00] hover:underline font-medium mt-2 inline-block">SDK 文档 →</a>
+    <a href="https://next.api.aliyun.com/api-tools/sdk" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">SDK 参考文档 →</a>
   </>);
 }
 
 function TerraformDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">Terraform · IaC</span>
-    </div>
-    <p className="text-[13px] text-gray-500 mb-3">声明式编排引擎，以「资源状态」视角管理云上资源。</p>
-    <div className="bg-[#1a1a2e] rounded-xl p-4 font-mono text-[12px] leading-[1.7] mb-3">
-      <div className="text-gray-300">resource <span className="text-[#FFB060]">&quot;alicloud_instance&quot;</span> {"{"}</div>
-      <div className="text-gray-300 pl-4">type = <span className="text-green-400">&quot;ecs.c7.large&quot;</span></div>
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">声明式 IaC 编排</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-5">隐藏 SDK/API 细节，以「资源状态」视角管理云上资源，自带状态管理和托管沙箱执行。</p>
+
+    <div className="bg-[#1a1a2e] rounded-xl p-5 font-mono text-[13px] leading-[1.8] mb-5 tool-row" style={{ animationDelay: "0.1s" }}>
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-3 h-3 rounded-full bg-red-400/60" /><div className="w-3 h-3 rounded-full bg-yellow-400/60" /><div className="w-3 h-3 rounded-full bg-green-400/60" />
+        <span className="ml-2 text-[10px] text-gray-500">main.tf</span>
+      </div>
+      <div className="text-gray-300">resource <span className="text-[#FFB060]">&quot;alicloud_instance&quot;</span> <span className="text-gray-500">&quot;web&quot;</span> {"{"}</div>
+      <div className="text-gray-300 pl-4">instance_type = <span className="text-green-400">&quot;ecs.c7.large&quot;</span></div>
+      <div className="text-gray-300 pl-4">image_id     = <span className="text-green-400">&quot;ubuntu_22_04_x64&quot;</span></div>
       <div className="text-gray-300">{"}"}</div>
     </div>
-    <div className="space-y-1.5 mb-3">
-      {["HCL 代码生成 Skill", "存量资源 Terraform 导入"].map((s) => (
-        <div key={s} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[rgba(255,106,0,0.03)] border border-[rgba(255,106,0,0.08)]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#FF6A00]" />
-          <span className="text-[12px] text-gray-600">{s}</span>
+
+    <div className="space-y-3 mb-5">
+      {[
+        { title: "HCL 代码生成", desc: "根据需求自动生成 Terraform 配置代码" },
+        { title: "存量资源导入", desc: "将已有云资源纳入 Terraform 统一管理" },
+      ].map((s, i) => (
+        <div key={s.title} className="rounded-xl border border-black/[0.04] p-4 relative overflow-hidden tool-row" style={{ animationDelay: `${(i + 1) * 0.12}s` }}>
+          <div className="shimmer-bar absolute inset-0" style={{ animationDelay: `${i * 0.5}s` }} />
+          <div className="text-[14px] font-semibold text-gray-800 mb-1 relative z-10">{s.title}</div>
+          <p className="text-[13px] text-gray-400 relative z-10">{s.desc}</p>
         </div>
       ))}
     </div>
-    <a href="https://next.api.aliyun.com/terraform" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#FF6A00] hover:underline font-medium">在线调试 →</a>
+    <div className="flex gap-4">
+      <a href="https://next.api.aliyun.com/terraform" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">在线调试 →</a>
+      <a href="https://iac.console.aliyun.com/" target="_blank" rel="noopener noreferrer" className="text-[14px] text-gray-400 hover:underline">自动化服务台 →</a>
+    </div>
   </>);
 }
 
 function SkillsDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">Skills Market · 160+</span>
-    </div>
-    <p className="text-[13px] text-gray-500 mb-3">覆盖阿里云各产品线，从通用指引到专家级诊断能力。</p>
-    <div className="space-y-1.5 mb-3">
-      {["数据库诊断", "RAM 权限诊断", "ECS 诊断", "CLI 使用指引", "Terraform 代码生成"].map((s) => (
-        <div key={s} className="flex items-center gap-3 px-3 py-2 rounded-lg border border-black/[0.04]">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#FF6A00]" />
-          <span className="text-[12px] text-gray-700">{s}</span>
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">160+ 通用与领域专家技能</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-5">覆盖阿里云各产品线，从通用使用指引到领域专家级诊断能力，扩展 Agent 的领域知识。</p>
+
+    <div className="space-y-3 mb-5">
+      {[
+        { name: "数据库诊断", desc: "SQL 性能分析、慢查询定位、索引优化建议" },
+        { name: "RAM 权限诊断", desc: "Policy 冲突检测、权限最小化、合规审计" },
+        { name: "ECS 诊断", desc: "实例状态排查、性能瓶颈分析、配置审查" },
+      ].map((s, i) => (
+        <div key={s.name} className="rounded-xl border border-black/[0.04] p-4 tool-row" style={{ animationDelay: `${i * 0.1}s` }}>
+          <div className="text-[14px] font-semibold text-gray-800 mb-1">{s.name}</div>
+          <p className="text-[13px] text-gray-400">{s.desc}</p>
         </div>
       ))}
-      <div className="text-[11px] text-gray-400 px-3">+ 更多 160+ 技能</div>
+      <p className="text-[13px] text-gray-400">以及更多 160+ 技能覆盖全产品线...</p>
     </div>
-    <a href="https://skills.aliyun.com/" target="_blank" rel="noopener noreferrer" className="text-[13px] text-[#FF6A00] hover:underline font-medium">浏览 Skills 市场 →</a>
+    <a href="https://skills.aliyun.com/" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">浏览 Skills 市场 →</a>
   </>);
 }
 
 function McpServerDetail() {
   return (<>
-    <div className="flex items-center gap-2 mb-4">
-      <div className="w-2 h-2 rounded-full bg-[#FF6A00] animate-pulse-dot" />
-      <span className="text-[12px] text-gray-400 font-mono">Custom MCP Server</span>
-    </div>
-    <div className="text-center py-4">
-      <div className="text-[40px] font-bold text-gray-200 mb-1">2w+</div>
-      <div className="text-[13px] text-gray-400 mb-4">OpenAPI 可选</div>
-      <div className="flex items-center justify-center gap-3 mb-4">
-        <div className="px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-100 text-[12px] text-gray-500">全量 OpenAPI</div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6A00" strokeWidth="2" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-        <div className="px-3 py-1.5 rounded-lg bg-[rgba(255,106,0,0.06)] border border-[rgba(255,106,0,0.15)] text-[12px] text-[#FF6A00] font-medium">你的 MCP 端点</div>
+    <h3 className="text-[18px] font-bold text-gray-800 mb-2">自定义 OpenAPI 组合 MCP 服务</h3>
+    <p className="text-[14px] text-gray-500 leading-relaxed mb-6">按业务场景从阿里云 2w+ OpenAPI 中选取子集，打包为你的专属 MCP Server endpoint，适合进阶定制需求。</p>
+
+    <div className="flex items-stretch rounded-xl overflow-hidden border border-black/[0.04] mb-5 tool-row" style={{ animationDelay: "0.15s" }}>
+      <div className="flex-1 p-6 text-center bg-black/[0.02] relative overflow-hidden">
+        <div className="shimmer-bar absolute inset-0" style={{ animationDelay: "0.5s" }} />
+        <p className="text-[13px] text-gray-400 mb-2 relative z-10">阿里云全量 OpenAPI</p>
+        <p className="text-[36px] font-bold bg-gradient-to-b from-gray-300 to-gray-200 bg-clip-text text-transparent leading-none relative z-10">20000+</p>
       </div>
-      <p className="text-[12px] text-gray-400 max-w-[350px] mx-auto">按业务场景自定义子集，打包为专属 MCP Server endpoint。</p>
+      <div className="flex items-center px-3 bg-black/[0.01]">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#FF6A00] to-[#FF9640] flex items-center justify-center shadow-[0_2px_12px_rgba(255,106,0,0.3)] animate-pulse-dot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+        </div>
+      </div>
+      <div className="flex-1 p-6 text-center bg-[rgba(255,106,0,0.03)] relative overflow-hidden">
+        <div className="shimmer-bar absolute inset-0" style={{ animationDelay: "1s" }} />
+        <p className="text-[13px] text-[#FF6A00] mb-2 relative z-10">你的专属端点</p>
+        <p className="text-[36px] font-bold bg-gradient-to-b from-[#FF6A00] to-[#FF9640] bg-clip-text text-transparent leading-none relative z-10">定制</p>
+      </div>
     </div>
-    <a href="https://next.api.aliyun.com/mcp" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-[13px] text-[#FF6A00] hover:underline font-medium">查看文档 →</a>
+    <a href="https://next.api.aliyun.com/mcp" target="_blank" rel="noopener noreferrer" className="text-[14px] text-[#FF6A00] hover:underline font-medium">查看文档 →</a>
   </>);
 }
 
 function ToolShowcase() {
   const [active, setActive] = useState("mcp-core");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [detailTop, setDetailTop] = useState(0);
-
-  const detailRef = useRef<HTMLDivElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-
-  const [activeCardBottom, setActiveCardBottom] = useState(0);
-  const [alignMode, setAlignMode] = useState<"top" | "progress" | "bottom">("top");
-
-  const handleHover = (id: string, e: React.MouseEvent) => {
-    setActive(id);
-    const card = e.currentTarget as HTMLElement;
-    const leftContainer = leftRef.current;
-    if (!leftContainer) return;
-
-    const cardTop = card.offsetTop;
-    const cardBottom = cardTop + card.offsetHeight;
-
-    if (id === "mcp-server") {
-      setActiveCardBottom(cardBottom);
-      setAlignMode("bottom");
-    } else if (id === "skills") {
-      const lastCard = leftContainer.lastElementChild as HTMLElement;
-      const lastBottom = lastCard ? lastCard.offsetTop + lastCard.offsetHeight : cardBottom;
-      setActiveCardBottom(lastBottom);
-      setAlignMode("bottom");
-    } else {
-      const leftHeight = leftContainer.offsetHeight;
-      const cardCenter = cardTop + card.offsetHeight / 2;
-      const progress = leftHeight > 0 ? cardCenter / leftHeight : 0;
-      setDetailTop(Math.max(0, cardTop));
-      setAlignMode("progress");
-      // recalc after render
-      requestAnimationFrame(() => {
-        const detailH = detailRef.current?.offsetHeight || 0;
-        const topAligned = cardTop;
-        const bottomAligned = cardBottom - detailH;
-        const finalTop = topAligned + (bottomAligned - topAligned) * progress;
-        setDetailTop(Math.max(0, finalTop));
-      });
-    }
-  };
-
-  // For bottom-aligned modes, recalc after detail content renders
-  useEffect(() => {
-    if (alignMode === "bottom") {
-      const timer = setTimeout(() => {
-        const detailH = detailRef.current?.offsetHeight || 0;
-        setDetailTop(Math.max(0, activeCardBottom - detailH));
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [active, alignMode, activeCardBottom]);
 
   return (
     <section className="px-10 py-24 max-w-[1200px] mx-auto">
@@ -327,36 +347,34 @@ function ToolShowcase() {
         <h2 className="text-[40px] font-bold tracking-tight">核心工具详解</h2>
       </div>
 
-      <div ref={containerRef} className="relative flex gap-6 max-w-[1100px] mx-auto items-start">
+      <div className="flex gap-6 max-w-[1100px] mx-auto items-start">
         {/* Left */}
-        <div ref={leftRef} className="flex flex-col gap-2 w-[280px] flex-shrink-0">
+        <div className="flex flex-col gap-2 w-[280px] flex-shrink-0">
           {toolData.map((t) => (
             <div
               key={t.id}
-              onMouseEnter={(e) => handleHover(t.id, e)}
-              className={`cursor-pointer rounded-xl px-4 py-3 transition-all duration-300 border ${
+              onMouseEnter={() => setActive(t.id)}
+              className={`cursor-pointer rounded-xl px-4 transition-all duration-300 border ${
                 active === t.id
-                  ? "bg-white border-[rgba(255,106,0,0.15)] shadow-[0_4px_20px_rgba(255,106,0,0.06)]"
-                  : "bg-white/50 border-transparent hover:bg-white/80"
+                  ? "bg-white border-[rgba(255,106,0,0.15)] shadow-[0_4px_20px_rgba(255,106,0,0.06)] py-4"
+                  : "bg-white/50 border-transparent hover:bg-white/80 py-3"
               }`}
             >
-              <div className="flex items-center gap-2.5 mb-1">
-                <h3 className={`text-[16px] font-semibold transition-colors ${active === t.id ? "text-gray-900" : "text-gray-500"}`}>{t.title}</h3>
-                <span className={`px-2.5 py-0.5 text-[11px] font-medium rounded-full border transition-all ${
-                  active === t.id ? "bg-[rgba(255,106,0,0.08)] text-[#FF6A00] border-[rgba(255,106,0,0.12)]" : "bg-gray-50 text-gray-400 border-gray-100"
-                }`}>{t.tag}</span>
+              <h3 className={`text-[16px] font-semibold transition-all duration-300 ${
+                active === t.id
+                  ? "bg-gradient-to-r from-[#FF6A00] via-[#FF9640] to-[#FFB060] bg-clip-text text-transparent"
+                  : "text-gray-500"
+              }`}>{t.title}</h3>
+              <div className={`overflow-hidden transition-all duration-300 ${active === t.id ? "max-h-[60px] mt-2 opacity-100" : "max-h-0 mt-0 opacity-0"}`}>
+                <p className="text-[13px] text-gray-400 leading-relaxed">{t.desc}</p>
               </div>
-              <p className={`text-[13px] leading-relaxed transition-colors ${active === t.id ? "text-gray-500" : "text-gray-400"}`}>{t.desc}</p>
             </div>
           ))}
         </div>
 
-        {/* Right — positioned to align with active card */}
-        <div
-          className="flex-1 absolute left-[304px] right-0 transition-all duration-300 ease-out"
-          style={{ top: detailTop }}
-        >
-          <div ref={detailRef} className="rounded-2xl border border-black/[0.04] bg-white/60 backdrop-blur-xl p-7">
+        {/* Right — sticky */}
+        <div className="flex-1">
+          <div key={active} className="sticky top-20 rounded-2xl border border-black/[0.04] bg-white/60 backdrop-blur-xl p-7 animate-fade-in-up" style={{ animationDuration: "0.3s" }}>
             {active === "mcp-core" && <McpCoreDetail />}
             {active === "plugin" && <PluginDetail />}
             {active === "cli" && <CliDetail />}
@@ -508,42 +526,76 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ─── 选型导览（时间线） ─── */}
+        {/* ─── 选型导览（翻转卡片） ─── */}
         <section className="px-10 py-20 max-w-[1200px] mx-auto">
           <div className="text-center mb-12">
             <p className="text-[14px] text-[#FF6A00] font-semibold mb-3 tracking-wide">快速选型</p>
             <h2 className="text-[36px] font-bold tracking-tight">如何选择原子工具</h2>
           </div>
 
-          <div className="max-w-[780px] mx-auto space-y-3">
-            {[
-              { tool: "MCP-Core", scene: "Agent 统一调用阿里云 API", desc: "9 大核心工具，2w+ OpenAPI，协议层权限管控、免依赖、免升级", rec: true },
-              { tool: "Plugin", scene: "Agent 框架插件式集成", desc: "Claude / Codex / Qoder 官方插件，Skill + 最佳实践 + MCP 自动集成", rec: true },
-              { tool: "CLI (AI Mode)", scene: "命令行交互、脚本编排", desc: "全产品 All-in-One CLI，AI Mode 自动纠错、可观测、统一鉴权", rec: false },
-              { tool: "SDK", scene: "多语言代码集成", desc: "Common SDK + 产品专有 SDK，配合 SDK Coding Skill", rec: false },
-              { tool: "Terraform", scene: "声明式基础设施编排", desc: "状态管理、托管沙箱执行环境，配合 Codegen / Import Skill", rec: false },
-              { tool: "Skills 市场", scene: "领域专家级运维与诊断", desc: "160+ 技能：数据库诊断、RAM 权限诊断、ECS 诊断等", rec: false },
-              { tool: "MCP-Server", scene: "自定义 API 组合 MCP 服务", desc: "按需将 OpenAPI 子集打包为专属 MCP endpoint", rec: false },
-            ].map((item, i) => (
-              <div key={i} className={`group shine-card rounded-xl px-6 py-4 flex items-center gap-6 transition-all duration-300 ${item.rec ? "border-[rgba(255,106,0,0.1)]" : ""}`}>
-                <div className="w-[200px] flex-shrink-0">
-                  <div className="text-[13px] text-gray-400 mb-0.5">场景</div>
-                  <div className="text-[14px] font-medium text-gray-700">{item.scene}</div>
-                </div>
-                <div className="w-[2px] h-8 bg-gradient-to-b from-transparent via-gray-200 to-transparent flex-shrink-0" />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    {item.rec && <span className="px-1.5 py-0.5 text-[9px] font-semibold bg-[rgba(255,106,0,0.08)] text-[#FF6A00] rounded border border-[rgba(255,106,0,0.12)]">推荐</span>}
-                    <span className={`text-[15px] font-bold ${item.rec ? "text-[#FF6A00]" : "text-gray-800"}`}>{item.tool}</span>
-                  </div>
-                  <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-[60px]">
-                    <p className="text-[12px] text-gray-400 leading-relaxed pt-1">{item.desc}</p>
+          <div className="max-w-[1060px] mx-auto">
+            {/* Top row: 2 recommended, larger */}
+            <div className="grid grid-cols-2 gap-5 mb-5">
+              {[
+                { tool: "MCP-Core", scene: "Agent 统一调用阿里云 API", desc: "9 大核心工具，2w+ OpenAPI\n协议层权限管控、免依赖、免升级", rec: true },
+                { tool: "Plugin", scene: "Agent 框架插件式集成", desc: "Claude / Codex / Qoder 官方插件\nSkill + 最佳实践，开箱即用", rec: true },
+              ].map((item, i) => (
+                <div key={i} className="flip-card h-[180px]" style={{ perspective: "1000px" }}>
+                  <div className="flip-card-inner relative w-full h-full transition-transform duration-500" style={{ transformStyle: "preserve-3d" }}>
+                    <div className="absolute inset-0 rounded-2xl p-7 flex flex-col justify-center bg-gradient-to-br from-[rgba(255,106,0,0.05)] to-white border border-[rgba(255,106,0,0.12)]" style={{ backfaceVisibility: "hidden" }}>
+                      <p className="text-[20px] font-bold text-gray-800 leading-snug tracking-tight">{item.scene}</p>
+                    </div>
+                    <div className="absolute inset-0 rounded-2xl p-7 flex flex-col justify-center bg-gradient-to-br from-[#FF6A00] to-[#FF9640]" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-[20px] font-bold text-white">{item.tool}</span>
+                        <span className="px-2 py-0.5 text-[10px] font-semibold bg-white/20 text-white rounded-full">推荐</span>
+                      </div>
+                      <p className="text-[14px] text-white/85 leading-relaxed whitespace-pre-line">{item.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            {/* Middle row: 3 */}
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              {[
+                { tool: "CLI (AI Mode)", scene: "命令行交互、脚本编排", desc: "全产品 All-in-One CLI\nAI Mode 自动纠错、可观测" },
+                { tool: "SDK", scene: "多语言代码集成", desc: "Common + 产品专有 SDK\n配合 Coding Skill 生成代码" },
+                { tool: "Terraform", scene: "声明式基础设施编排", desc: "IaC 编排引擎，状态管理\n配合 Codegen / Import Skill" },
+              ].map((item, i) => (
+                <div key={i} className="flip-card h-[150px]" style={{ perspective: "1000px" }}>
+                  <div className="flip-card-inner relative w-full h-full transition-transform duration-500" style={{ transformStyle: "preserve-3d" }}>
+                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-white/70 backdrop-blur-xl border border-black/[0.04]" style={{ backfaceVisibility: "hidden" }}>
+                      <p className="text-[17px] font-bold text-gray-800 leading-snug tracking-tight">{item.scene}</p>
+                    </div>
+                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-gray-800" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+                      <span className="text-[17px] font-bold text-white mb-2">{item.tool}</span>
+                      <p className="text-[13px] text-white/75 leading-relaxed whitespace-pre-line">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Bottom row: 2 */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { tool: "Skills 市场", scene: "领域专家级运维与诊断", desc: "160+ 技能覆盖各产品线\n数据库 / RAM / ECS 诊断等" },
+                { tool: "MCP-Server", scene: "自定义 API 组合 MCP 服务", desc: "2w+ OpenAPI 自定义子集\n打包为专属 MCP endpoint" },
+              ].map((item, i) => (
+                <div key={i} className="flip-card h-[140px]" style={{ perspective: "1000px" }}>
+                  <div className="flip-card-inner relative w-full h-full transition-transform duration-500" style={{ transformStyle: "preserve-3d" }}>
+                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-white/70 backdrop-blur-xl border border-black/[0.04]" style={{ backfaceVisibility: "hidden" }}>
+                      <p className="text-[17px] font-bold text-gray-800 leading-snug tracking-tight">{item.scene}</p>
+                    </div>
+                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-gray-800" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+                      <span className="text-[17px] font-bold text-white mb-2">{item.tool}</span>
+                      <p className="text-[13px] text-white/75 leading-relaxed whitespace-pre-line">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-
         </section>
 
         {/* Footer */}
