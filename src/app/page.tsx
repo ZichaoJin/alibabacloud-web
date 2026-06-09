@@ -544,24 +544,18 @@ export default function Home() {
             <h2 className="text-[36px] font-bold tracking-tight">如何选择原子工具</h2>
           </div>
 
-          <div className="max-w-[960px] mx-auto space-y-10">
-            {/* 第一层：推荐入口 */}
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[rgba(255,106,0,0.2)]" />
-                <h3 className="text-[15px] font-semibold text-gray-800 flex-shrink-0">让 Agent 操作阿里云？从这里开始</h3>
-                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[rgba(255,106,0,0.2)]" />
-              </div>
+          <div className="max-w-[960px] mx-auto">
+            {/* 第一层：推荐入口 — 大卡片带渐变背景 */}
+            <div className="rounded-2xl bg-gradient-to-b from-[rgba(255,106,0,0.04)] to-transparent p-8 pb-6 mb-2">
+              <h3 className="text-[15px] font-semibold text-[#FF6A00] mb-5 text-center">让 Agent 操作阿里云？从这里开始</h3>
               <div className="grid grid-cols-2 gap-5">
                 {[
                   { tool: "alibabacloud-mcp-core", label: "统一协议层入口", who: "让 Agent 直接调用阿里云 API", points: ["9 大核心工具", "2w+ OpenAPI 即开即用", "协议层安全管控", "0 依赖、免升级"] },
                   { tool: "alibabacloud-agent-toolkit", label: "框架官方 Plugin", who: "用 Claude / Codex / Qoder 开发", points: ["Skill + 最佳实践", "MCP-Core 自动集成", "SDD 端到端运维", "开箱即用"] },
                 ].map((item, i) => (
-                  <div key={i} className="group shine-card rounded-2xl p-7 border-[rgba(255,106,0,0.08)] hover:border-[rgba(255,106,0,0.15)] transition-all">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[17px] font-bold bg-gradient-to-r from-[#FF6A00] to-[#FF9640] bg-clip-text text-transparent">{item.tool}</span>
-                    </div>
-                    <p className="text-[13px] text-gray-400 mb-4">{item.label}</p>
+                  <div key={i} className="group shine-card rounded-2xl p-7 border-[rgba(255,106,0,0.08)] hover:border-[rgba(255,106,0,0.15)] transition-all bg-white/80">
+                    <span className="text-[17px] font-bold bg-gradient-to-r from-[#FF6A00] to-[#FF9640] bg-clip-text text-transparent">{item.tool}</span>
+                    <p className="text-[13px] text-gray-400 mt-1 mb-4">{item.label}</p>
                     <p className="text-[15px] font-medium text-gray-800 mb-3">{item.who}</p>
                     <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                       {item.points.map((p) => (
@@ -576,47 +570,49 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 第二层：执行层 */}
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-gray-100" />
-                <h3 className="text-[14px] font-medium text-gray-400 flex-shrink-0">需要直接执行底层操作</h3>
-                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-gray-100" />
-              </div>
-              <div className="grid grid-cols-3 gap-4">
-                {[
-                  { tool: "阿里云统一 CLI", who: "写脚本、跑命令", detail: "All-in-One · 务必开启 AI Mode" },
-                  { tool: "Alibaba Cloud SDK", who: "在代码里调用阿里云", detail: "Common SDK + 产品专有 SDK" },
-                  { tool: "Terraform (IaC)", who: "用代码管理基础设施", detail: "声明式 · 状态管理 · 托管沙箱" },
-                ].map((item, i) => (
-                  <div key={i} className="shine-card rounded-xl p-6">
-                    <p className="text-[15px] font-semibold text-gray-800 mb-1">{item.tool}</p>
-                    <p className="text-[14px] text-gray-600 mb-2">{item.who}</p>
-                    <p className="text-[12px] text-gray-400">{item.detail}</p>
-                  </div>
-                ))}
-              </div>
+            {/* 向下箭头 */}
+            <div className="flex justify-center -mt-4 mb-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.5" strokeLinecap="round"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
             </div>
 
-            {/* 第三层：扩展 */}
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-gray-100" />
-                <h3 className="text-[14px] font-medium text-gray-400 flex-shrink-0">扩展与底座</h3>
-                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-gray-100" />
+            {/* 第二层 + 第三层：紧凑网格 */}
+            <div className="rounded-2xl border border-black/[0.04] overflow-hidden">
+              {/* 第二层 */}
+              <div className="px-8 pt-6 pb-5">
+                <h3 className="text-[14px] font-semibold text-gray-600 mb-4 text-center">需要直接执行底层操作</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  {[
+                    { tool: "阿里云统一 CLI", who: "写脚本、跑命令", detail: "All-in-One · 务必开启 AI Mode" },
+                    { tool: "Alibaba Cloud SDK", who: "在代码里调用阿里云", detail: "Common SDK + 产品专有 SDK" },
+                    { tool: "Terraform (IaC)", who: "用代码管理基础设施", detail: "声明式 · 状态管理 · 托管沙箱" },
+                  ].map((item, i) => (
+                    <div key={i} className="shine-card rounded-xl p-5">
+                      <p className="text-[15px] font-semibold text-gray-800 mb-1">{item.tool}</p>
+                      <p className="text-[13px] text-gray-500 mb-1">{item.who}</p>
+                      <p className="text-[12px] text-gray-400">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                {[
-                  { tool: "Skills 市场", who: "要用专家级诊断能力", detail: "160+ 技能 · 数据库 / RAM / ECS 诊断" },
-                  { tool: "自定义 MCP-Server", who: "要定制自己的 MCP 端点", detail: "从 2w+ OpenAPI 中按需组合" },
-                  { tool: "OpenAPI 元数据", who: "需要原始 API 元数据", detail: "2w+ API · 一切工具的数据来源" },
-                ].map((item, i) => (
-                  <div key={i} className="shine-card rounded-xl p-6">
-                    <p className="text-[15px] font-semibold text-gray-800 mb-1">{item.tool}</p>
-                    <p className="text-[14px] text-gray-600 mb-2">{item.who}</p>
-                    <p className="text-[12px] text-gray-400">{item.detail}</p>
-                  </div>
-                ))}
+
+              <div className="h-[1px] mx-8 bg-black/[0.04]" />
+
+              {/* 第三层 */}
+              <div className="px-8 pt-5 pb-6">
+                <h3 className="text-[14px] font-semibold text-gray-600 mb-4 text-center">扩展与底座</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  {[
+                    { tool: "Skills 市场", who: "要用专家级诊断能力", detail: "160+ 技能 · 数据库 / RAM / ECS" },
+                    { tool: "自定义 MCP-Server", who: "要定制自己的 MCP 端点", detail: "从 2w+ OpenAPI 按需组合" },
+                    { tool: "OpenAPI 元数据", who: "需要原始 API 元数据", detail: "2w+ API · 一切工具的数据来源" },
+                  ].map((item, i) => (
+                    <div key={i} className="shine-card rounded-xl p-5">
+                      <p className="text-[15px] font-semibold text-gray-800 mb-1">{item.tool}</p>
+                      <p className="text-[13px] text-gray-500 mb-1">{item.who}</p>
+                      <p className="text-[12px] text-gray-400">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
