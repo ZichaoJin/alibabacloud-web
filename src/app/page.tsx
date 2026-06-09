@@ -2,15 +2,20 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
-const tabs = ["面向 Agent", "面向开发者", "README"] as const;
+const tabs = ["面向 Agent", "面向开发者"] as const;
+
+const tabHint = {
+  "面向 Agent": "将以下提示词发送给您的 Agent，以添加 Alibaba Cloud Toolkit",
+  "面向开发者": "使用 npx 安装 alibabacloud-agent-toolkit 并开始使用",
+  README: "",
+};
 
 const tabContent = {
   "面向 Agent":
-    "请访问 https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit\n并按说明为我安装 alibabacloud agent toolkit skills。",
+    "请访问 https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit 并按说明为我安装 alibabacloud agent toolkit skills。",
   "面向开发者":
     "npx @anthropic-ai/claude-code install alibabacloud-agent-toolkit",
-  README:
-    "# Alibaba Cloud Agent Toolkit\n\nMCP servers, skills, and plugins for building AI agents on Alibaba Cloud.",
+  README: "https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit",
 };
 
 function ShineCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -44,35 +49,42 @@ function TypeWriter({ text, className = "" }: { text: string; className?: string
 const toolData = [
   {
     id: "mcp-core",
-    title: "MCP-Core",
+    title: "alibabacloud-mcp-core",
     tag: "统一协议层",
     desc: "9 大核心工具，2w+ OpenAPI 即开即用",
     stats: [{ value: "20000+", label: "API" }, { value: "9", label: "Tools" }],
   },
   {
     id: "plugin",
-    title: "Plugin",
+    title: "alibabacloud-agent-toolkit",
     tag: "框架集成",
     desc: "Claude / Codex / Qoder 官方插件",
     stats: [{ value: "2", label: "模块" }, { value: "3", label: "平台" }],
   },
   {
     id: "cli",
-    title: "CLI (AI Mode)",
+    title: "阿里云统一 CLI (AI Mode)",
     tag: "命令行",
     desc: "All-in-One CLI，AI Mode 自动纠错",
     stats: [{ value: "All-in-One", label: "覆盖" }, { value: "AI Mode", label: "增强" }],
   },
   {
+    id: "mcp-server",
+    title: "自定义 API 组合 MCP-Server",
+    tag: "自定义",
+    desc: "按需打包 OpenAPI 子集为专属端点",
+    stats: [{ value: "2w+", label: "可选 API" }, { value: "自定义", label: "端点" }],
+  },
+  {
     id: "sdk",
-    title: "SDK",
+    title: "Alibaba Cloud SDK",
     tag: "代码集成",
     desc: "多语言 SDK，Common + 产品专有",
     stats: [{ value: "多语言", label: "覆盖" }, { value: "2", label: "类型" }],
   },
   {
     id: "terraform",
-    title: "Terraform",
+    title: "Terraform (IaC)",
     tag: "IaC 编排",
     desc: "声明式编排，资源状态管理",
     stats: [{ value: "IaC", label: "模式" }, { value: "托管", label: "沙箱" }],
@@ -83,13 +95,6 @@ const toolData = [
     tag: "领域专家",
     desc: "160+ 通用与专家级诊断技能",
     stats: [{ value: "160+", label: "技能" }, { value: "多产品", label: "覆盖" }],
-  },
-  {
-    id: "mcp-server",
-    title: "MCP-Server",
-    tag: "自定义",
-    desc: "按需打包 OpenAPI 子集为专属端点",
-    stats: [{ value: "2w+", label: "可选 API" }, { value: "自定义", label: "端点" }],
   },
 ];
 
@@ -141,7 +146,10 @@ function PluginDetail() {
 
     <div className="space-y-4 mb-5">
       <div className="rounded-xl border border-black/[0.04] p-5">
-        <div className="text-[15px] font-semibold text-gray-800 mb-4">alibabacloud-core · 原子能力 Skill 集合</div>
+        <div className="flex items-center gap-2 mb-4">
+          <span className="px-2 py-0.5 text-[10px] font-bold bg-[#FF6A00] text-white rounded">Plugin 1</span>
+          <span className="text-[15px] font-semibold text-gray-800">alibabacloud-core · 原子能力 Skill 集合</span>
+        </div>
         <div className="grid grid-cols-3 gap-2">
           {[
             { name: "SDK", desc: "集成最佳实践" },
@@ -160,7 +168,10 @@ function PluginDetail() {
       </div>
 
       <div className="rounded-xl border border-black/[0.04] p-5">
-        <div className="text-[15px] font-semibold text-gray-800 mb-1">alibabacloud-spec-ops · SDD 运维插件</div>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="px-2 py-0.5 text-[10px] font-bold bg-[#FF8830] text-white rounded">Plugin 2</span>
+          <span className="text-[15px] font-semibold text-gray-800">alibabacloud-spec-ops · SDD 运维插件</span>
+        </div>
         <p className="text-[13px] text-gray-400 mb-5">端到端自动化运维流程</p>
 
         {/* Animated pipeline */}
@@ -427,27 +438,30 @@ export default function Home() {
               <a href="#" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">文档</a>
               <a href="#" className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all">快速开始</a>
               <div className="relative">
-                <button onClick={() => setShowQR(!showQR)} className="px-4 py-1.5 text-[14px] text-gray-500 hover:text-gray-800 hover:bg-black/[0.03] rounded-full transition-all cursor-pointer">联系</button>
+                <button onClick={() => { setShowQR(!showQR); setShowGH(false); }} className={`px-4 py-1.5 text-[14px] rounded-full transition-all cursor-pointer ${showQR ? "text-[#FF6A00] bg-[rgba(255,106,0,0.06)]" : "text-gray-500 hover:text-gray-800 hover:bg-black/[0.03]"}`}>联系</button>
                 {showQR && (
                   <>
-                    <div className="fixed inset-0 z-40" onClick={() => setShowQR(false)} />
-                    <div className="absolute right-0 top-10 z-50 bg-white rounded-2xl shadow-[0_12px_48px_rgba(0,0,0,0.1)] border border-black/[0.04] p-5 w-[220px]">
-                      <p className="text-[13px] text-gray-600 font-medium mb-3 text-center">扫码加入交流群</p>
-                      <img src="/qrcode.png" alt="QR Code" className="w-full rounded-lg" />
+                    <div className="fixed inset-0 z-[45]" onClick={() => setShowQR(false)} />
+                    <div className="absolute right-0 top-12 z-50 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.1)] border border-black/[0.04] p-5 w-[260px] gh-dropdown" style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'saturate(200%) blur(30px)', WebkitBackdropFilter: 'saturate(200%) blur(30px)' }}>
+                      <img src="/qrcode.png" alt="QR Code" className="w-full rounded-lg mb-3" />
+                      <div className="text-[12px] text-gray-500 text-center space-y-1">
+                        <p>联系 <span className="text-gray-700 font-medium">@原根</span> or <span className="text-gray-700 font-medium">蔡何</span></p>
+                        <p className="text-[11px] text-gray-400">群号：165610029013</p>
+                      </div>
                     </div>
                   </>
                 )}
               </div>
               <div className="w-px h-4 bg-gray-200 mx-2" />
               <div className="relative">
-                <button onClick={() => setShowGH(!showGH)} className={`flex items-center gap-1.5 px-4 py-1.5 text-[13px] border rounded-full transition-all cursor-pointer ${showGH ? "text-[#FF6A00] border-[rgba(255,106,0,0.2)] bg-[rgba(255,106,0,0.04)]" : "text-gray-600 hover:text-gray-800 border-gray-200 hover:border-gray-300"}`}>
+                <button onClick={() => { setShowGH(!showGH); setShowQR(false); }} className={`flex items-center gap-1.5 px-4 py-1.5 text-[13px] border rounded-full transition-all cursor-pointer ${showGH ? "text-[#FF6A00] border-[rgba(255,106,0,0.2)] bg-[rgba(255,106,0,0.04)]" : "text-gray-600 hover:text-gray-800 border-gray-200 hover:border-gray-300"}`}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
                   GitHub
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform duration-200 ${showGH ? "rotate-180" : ""}`}><path d="M6 9l6 6 6-6" /></svg>
                 </button>
                 {showGH && (
                   <>
-                    <div className="fixed inset-0 z-40" onClick={() => setShowGH(false)} />
+                    <div className="fixed inset-0 z-[45]" onClick={() => setShowGH(false)} />
                     <div className="absolute -right-4 top-14 z-50 rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.1),0_8px_24px_rgba(0,0,0,0.04)] w-[380px] gh-dropdown overflow-hidden" style={{ background: 'rgba(255,255,255,0.75)', backdropFilter: 'saturate(200%) blur(40px)', WebkitBackdropFilter: 'saturate(200%) blur(40px)', border: '1px solid rgba(255,255,255,0.6)' }}>
                       <div className="p-3">
                         <div className="space-y-1.5">
@@ -482,33 +496,131 @@ export default function Home() {
         </nav>
 
         {/* ─── Hero ─── */}
-        <section className="text-center pt-32 pb-20 px-10 max-w-[1200px] mx-auto">
-          <h1 className="text-[56px] font-bold leading-[1.15] tracking-tight mb-6 animate-fade-in-up animation-delay-100">
+        <section className="text-center pt-40 pb-20 px-10 max-w-[1200px] mx-auto">
+          <h1 className="text-[56px] font-bold leading-[1.15] tracking-tight mb-5 animate-fade-in-up animation-delay-100">
             为 AI Agent 构建
             <br />
             <TypeWriter text="云端超能力" className="bg-gradient-to-r from-[#FF6A00] via-[#FF9640] to-[#FFB060] bg-clip-text text-transparent" />
           </h1>
-          <p className="text-[18px] text-gray-400 max-w-[560px] mx-auto mb-14 leading-relaxed animate-fade-in-up animation-delay-200">
-            从协议层到执行层的完整工具栈，让 Agent 通过 MCP 操控阿里云 2w+ OpenAPI
+          <p className="text-[18px] text-gray-400 max-w-[620px] mx-auto mb-10 leading-relaxed animate-fade-in-up animation-delay-200">
+            阿里云 AI 工具链团队提供 MCP-Core、Agent Toolkit、统一 CLI 等供 Agent 操作阿里云的可集成原子工具
           </p>
 
           {/* Install Card */}
-          <ShineCard className="max-w-[640px] mx-auto rounded-[24px] p-8 animate-fade-in-up animation-delay-300">
-            <div className="relative flex bg-black/[0.03] rounded-xl p-1 mb-6">
-              <div className="absolute top-1 bottom-1 rounded-[10px] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06),0_0_0_1px_rgba(255,106,0,0.06)] transition-all duration-300 ease-out" style={{ width: `${100 / tabs.length}%`, left: `${(tabs.indexOf(activeTab) * 100) / tabs.length}%` }} />
+          <ShineCard className="max-w-[640px] mx-auto rounded-2xl p-6 animate-fade-in-up animation-delay-300">
+            <div className="flex items-center gap-2 mb-4 justify-center">
               {tabs.map((tab) => (
-                <button key={tab} onClick={() => setActiveTab(tab)} className={`flex-1 text-center py-3 px-4 text-[14px] rounded-[10px] font-medium cursor-pointer relative z-10 transition-colors duration-200 ${activeTab === tab ? "text-[#FF6A00]" : "text-gray-400 hover:text-gray-600"}`}>{tab}</button>
+                <button key={tab} onClick={() => setActiveTab(tab)} className={`px-4 py-1.5 text-[13px] rounded-full font-medium cursor-pointer transition-all duration-200 ${activeTab === tab ? "bg-[#FF6A00] text-white shadow-[0_2px_8px_rgba(255,106,0,0.25)]" : "text-gray-400 hover:text-gray-600 hover:bg-black/[0.03]"}`}>{tab}</button>
               ))}
+              <a href="https://github.com/acloudlabs-unofficial/alibabacloud-agent-toolkit" target="_blank" rel="noopener noreferrer" className="px-4 py-1.5 text-[13px] rounded-full font-medium text-gray-400 hover:text-gray-600 hover:bg-black/[0.03] transition-all">README ↗</a>
             </div>
-            <div className="relative bg-black/[0.02] border border-black/[0.05] rounded-[16px] p-6 text-left">
-              <button onClick={handleCopy} className="absolute top-4 right-4 px-3.5 py-1.5 text-[12px] text-[#FF6A00] border border-[rgba(255,106,0,0.15)] rounded-lg bg-[rgba(255,106,0,0.04)] hover:bg-[rgba(255,106,0,0.08)] transition-all cursor-pointer font-sans">{copied ? "已复制 ✓" : "复制"}</button>
-              <pre className="whitespace-pre-wrap pr-16 font-mono text-[14px] text-gray-600 leading-[1.8]">{tabContent[activeTab]}</pre>
+            <p className="text-[13px] text-gray-400 mb-3 text-center">{tabHint[activeTab]}</p>
+            <div className="flex items-center gap-3 bg-black/[0.02] border border-black/[0.05] rounded-xl px-4 py-3">
+              <div className="flex-1 overflow-x-auto scrollbar-hide">
+                <pre className="font-mono text-[13px] text-gray-600 whitespace-nowrap">{tabContent[activeTab]}</pre>
+              </div>
+              <button onClick={handleCopy} className="px-3 py-1 text-[12px] text-[#FF6A00] border border-[rgba(255,106,0,0.15)] rounded-md bg-[rgba(255,106,0,0.04)] hover:bg-[rgba(255,106,0,0.08)] transition-all cursor-pointer font-sans flex-shrink-0">{copied ? "已复制 ✓" : "复制"}</button>
             </div>
           </ShineCard>
+
+          {/* Scroll hint */}
+          <div className="mt-12 mb-4 animate-fade-in-up animation-delay-300">
+            <div className="flex flex-col items-center gap-2 text-gray-300">
+              <span className="text-[12px]">向下滑动探索工具矩阵</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="animate-bounce">
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+            </div>
+          </div>
         </section>
 
         {/* ─── 重点工具展示 ─── */}
         <ToolShowcase />
+
+        {/* ─── 选型导览 ─── */}
+        <section className="px-10 py-20 max-w-[1200px] mx-auto">
+          <div className="text-center mb-14">
+            <p className="text-[14px] text-[#FF6A00] font-semibold mb-3 tracking-wide">快速选型</p>
+            <h2 className="text-[36px] font-bold tracking-tight">如何选择原子工具</h2>
+          </div>
+
+          <div className="max-w-[960px] mx-auto space-y-10">
+            {/* 第一层：推荐入口 */}
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[rgba(255,106,0,0.2)]" />
+                <h3 className="text-[15px] font-semibold text-gray-800 flex-shrink-0">让 Agent 操作阿里云？从这里开始</h3>
+                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[rgba(255,106,0,0.2)]" />
+              </div>
+              <div className="grid grid-cols-2 gap-5">
+                {[
+                  { tool: "alibabacloud-mcp-core", label: "统一协议层入口", who: "让 Agent 直接调用阿里云 API", points: ["9 大核心工具", "2w+ OpenAPI 即开即用", "协议层安全管控", "0 依赖、免升级"] },
+                  { tool: "alibabacloud-agent-toolkit", label: "框架官方 Plugin", who: "用 Claude / Codex / Qoder 开发", points: ["Skill + 最佳实践", "MCP-Core 自动集成", "SDD 端到端运维", "开箱即用"] },
+                ].map((item, i) => (
+                  <div key={i} className="group shine-card rounded-2xl p-7 border-[rgba(255,106,0,0.08)] hover:border-[rgba(255,106,0,0.15)] transition-all">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[17px] font-bold bg-gradient-to-r from-[#FF6A00] to-[#FF9640] bg-clip-text text-transparent">{item.tool}</span>
+                    </div>
+                    <p className="text-[13px] text-gray-400 mb-4">{item.label}</p>
+                    <p className="text-[15px] font-medium text-gray-800 mb-3">{item.who}</p>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                      {item.points.map((p) => (
+                        <div key={p} className="flex items-center gap-2 text-[13px] text-gray-500">
+                          <div className="w-1 h-1 rounded-full bg-[#FF6A00] flex-shrink-0" />
+                          {p}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 第二层：执行层 */}
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-gray-100" />
+                <h3 className="text-[14px] font-medium text-gray-400 flex-shrink-0">需要直接执行底层操作</h3>
+                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-gray-100" />
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { tool: "阿里云统一 CLI", who: "写脚本、跑命令", detail: "All-in-One · 务必开启 AI Mode" },
+                  { tool: "Alibaba Cloud SDK", who: "在代码里调用阿里云", detail: "Common SDK + 产品专有 SDK" },
+                  { tool: "Terraform (IaC)", who: "用代码管理基础设施", detail: "声明式 · 状态管理 · 托管沙箱" },
+                ].map((item, i) => (
+                  <div key={i} className="shine-card rounded-xl p-6">
+                    <p className="text-[15px] font-semibold text-gray-800 mb-1">{item.tool}</p>
+                    <p className="text-[14px] text-gray-600 mb-2">{item.who}</p>
+                    <p className="text-[12px] text-gray-400">{item.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 第三层：扩展 */}
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-gray-100" />
+                <h3 className="text-[14px] font-medium text-gray-400 flex-shrink-0">扩展与底座</h3>
+                <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-gray-100" />
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { tool: "Skills 市场", who: "要用专家级诊断能力", detail: "160+ 技能 · 数据库 / RAM / ECS 诊断" },
+                  { tool: "自定义 MCP-Server", who: "要定制自己的 MCP 端点", detail: "从 2w+ OpenAPI 中按需组合" },
+                  { tool: "OpenAPI 元数据", who: "需要原始 API 元数据", detail: "2w+ API · 一切工具的数据来源" },
+                ].map((item, i) => (
+                  <div key={i} className="shine-card rounded-xl p-6">
+                    <p className="text-[15px] font-semibold text-gray-800 mb-1">{item.tool}</p>
+                    <p className="text-[14px] text-gray-600 mb-2">{item.who}</p>
+                    <p className="text-[12px] text-gray-400">{item.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ─── 合作伙伴 ─── */}
         <section className="px-10 py-20 max-w-[1200px] mx-auto">
@@ -523,78 +635,6 @@ export default function Home() {
                 <div className="text-[12px] text-gray-400">{name === "更多合作伙伴..." ? "持续拓展中" : "Agent Platform"}</div>
               </ShineCard>
             ))}
-          </div>
-        </section>
-
-        {/* ─── 选型导览（翻转卡片） ─── */}
-        <section className="px-10 py-20 max-w-[1200px] mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-[14px] text-[#FF6A00] font-semibold mb-3 tracking-wide">快速选型</p>
-            <h2 className="text-[36px] font-bold tracking-tight">如何选择原子工具</h2>
-          </div>
-
-          <div className="max-w-[1060px] mx-auto">
-            {/* Top row: 2 recommended, larger */}
-            <div className="grid grid-cols-2 gap-5 mb-5">
-              {[
-                { tool: "MCP-Core", scene: "Agent 统一调用阿里云 API", desc: "9 大核心工具，2w+ OpenAPI\n协议层权限管控、免依赖、免升级", rec: true },
-                { tool: "Plugin", scene: "Agent 框架插件式集成", desc: "Claude / Codex / Qoder 官方插件\nSkill + 最佳实践，开箱即用", rec: true },
-              ].map((item, i) => (
-                <div key={i} className="flip-card h-[180px]" style={{ perspective: "1000px" }}>
-                  <div className="flip-card-inner relative w-full h-full transition-transform duration-500" style={{ transformStyle: "preserve-3d" }}>
-                    <div className="absolute inset-0 rounded-2xl p-7 flex flex-col justify-center bg-gradient-to-br from-[rgba(255,106,0,0.05)] to-white border border-[rgba(255,106,0,0.12)]" style={{ backfaceVisibility: "hidden" }}>
-                      <p className="text-[20px] font-bold text-gray-800 leading-snug tracking-tight">{item.scene}</p>
-                    </div>
-                    <div className="absolute inset-0 rounded-2xl p-7 flex flex-col justify-center bg-gradient-to-br from-[#FF6A00] to-[#FF9640]" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-[20px] font-bold text-white">{item.tool}</span>
-                        <span className="px-2 py-0.5 text-[10px] font-semibold bg-white/20 text-white rounded-full">推荐</span>
-                      </div>
-                      <p className="text-[14px] text-white/85 leading-relaxed whitespace-pre-line">{item.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Middle row: 3 */}
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              {[
-                { tool: "CLI (AI Mode)", scene: "命令行交互、脚本编排", desc: "全产品 All-in-One CLI\nAI Mode 自动纠错、可观测" },
-                { tool: "SDK", scene: "多语言代码集成", desc: "Common + 产品专有 SDK\n配合 Coding Skill 生成代码" },
-                { tool: "Terraform", scene: "声明式基础设施编排", desc: "IaC 编排引擎，状态管理\n配合 Codegen / Import Skill" },
-              ].map((item, i) => (
-                <div key={i} className="flip-card h-[150px]" style={{ perspective: "1000px" }}>
-                  <div className="flip-card-inner relative w-full h-full transition-transform duration-500" style={{ transformStyle: "preserve-3d" }}>
-                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-white/70 backdrop-blur-xl border border-black/[0.04]" style={{ backfaceVisibility: "hidden" }}>
-                      <p className="text-[17px] font-bold text-gray-800 leading-snug tracking-tight">{item.scene}</p>
-                    </div>
-                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-gray-800" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-                      <span className="text-[17px] font-bold text-white mb-2">{item.tool}</span>
-                      <p className="text-[13px] text-white/75 leading-relaxed whitespace-pre-line">{item.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Bottom row: 2 */}
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { tool: "Skills 市场", scene: "领域专家级运维与诊断", desc: "160+ 技能覆盖各产品线\n数据库 / RAM / ECS 诊断等" },
-                { tool: "MCP-Server", scene: "自定义 API 组合 MCP 服务", desc: "2w+ OpenAPI 自定义子集\n打包为专属 MCP endpoint" },
-              ].map((item, i) => (
-                <div key={i} className="flip-card h-[140px]" style={{ perspective: "1000px" }}>
-                  <div className="flip-card-inner relative w-full h-full transition-transform duration-500" style={{ transformStyle: "preserve-3d" }}>
-                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-white/70 backdrop-blur-xl border border-black/[0.04]" style={{ backfaceVisibility: "hidden" }}>
-                      <p className="text-[17px] font-bold text-gray-800 leading-snug tracking-tight">{item.scene}</p>
-                    </div>
-                    <div className="absolute inset-0 rounded-xl p-6 flex flex-col justify-center bg-gray-800" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-                      <span className="text-[17px] font-bold text-white mb-2">{item.tool}</span>
-                      <p className="text-[13px] text-white/75 leading-relaxed whitespace-pre-line">{item.desc}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
